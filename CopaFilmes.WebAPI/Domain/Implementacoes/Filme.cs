@@ -19,7 +19,10 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public bool PossuiMaiorNota(Filme outroFilme)
         {
-            return true;
+            if (_nota > outroFilme._nota)
+                return true;
+            else 
+                return false;
         }
     }
 }
