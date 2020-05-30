@@ -1,5 +1,7 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
 {
@@ -7,19 +9,21 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
     public class FilmeTests
     {
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Maior_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Verdadeiro()
+        [DynamicData(nameof(NotasEntreDoisFilmes), DynamicDataSourceType.Property)]
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Maior_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Verdadeiro(decimal notaFilmeA, decimal notaFilmeB)
         {
-            var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
-            var filmeB = new FilmeTestBuilder().ComNota(6.7m).Build();
+            var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
+            var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
             Assert.IsTrue(filmeA.PossuiNotaMaiorDoQue(filmeB));
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Menor_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Falso()
+        [DynamicData(nameof(NotasEntreDoisFilmes), DynamicDataSourceType.Property)]
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Menor_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Falso(decimal notaFilmeA, decimal notaFilmeB)
         {
-            var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
-            var filmeB = new FilmeTestBuilder().ComNota(6.7m).Build();
+            var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
+            var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
             Assert.IsFalse(filmeB.PossuiNotaMaiorDoQue(filmeA));
         }
@@ -31,6 +35,20 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var filmeB = new FilmeTestBuilder().ComNota(8.5m).Build();
 
             Assert.IsFalse(filmeA.PossuiNotaMaiorDoQue(filmeB));
+        }
+
+        public static IEnumerable<object[]> NotasEntreDoisFilmes
+        {
+            get
+            {
+                yield return new object[] { 8.8m, 8.1m };
+                yield return new object[] { 7.9m, 7.2m };
+                yield return new object[] { 8.5m, 7.8m };
+                yield return new object[] { 6.7m, 6.3m };
+                yield return new object[] { 8.8m, 7.9m };
+                yield return new object[] { 8.5m, 6.7m };
+                yield return new object[] { 8.8m, 8.5m };
+            }
         }
 
         [TestMethod]
