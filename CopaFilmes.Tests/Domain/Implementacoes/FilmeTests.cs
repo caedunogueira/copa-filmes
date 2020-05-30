@@ -63,10 +63,15 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Precede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Menos_Um()
+        [DataRow("Filme A", "Filme B")]
+        [DataRow("Jurassic World: Reino Ameaçado", "Os Incríveis 2")]
+        [DataRow("Hereditário", "Oito Mulheres e um Segredo")]
+        [DataRow("Deadpool 2", "Vingadores: Guerra Infinita")]
+        [DataRow("Han Solo: Uma História Star Wars", "Thor: Ragnarok")]
+        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Precede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Menos_Um(string tituloFilmeA, string tituloFilmeB)
         {
-            var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").Build();
-            var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").Build();
+            var filmeA = new FilmeTestBuilder().ComTitulo(tituloFilmeA).Build();
+            var filmeB = new FilmeTestBuilder().ComTitulo(tituloFilmeB).Build();
 
             var resultado = filmeA.CompareTo(filmeB);
 
@@ -74,7 +79,12 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Sucede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Um()
+        [DataRow("Filme A", "Filme B")]
+        [DataRow("Jurassic World: Reino Ameaçado", "Os Incríveis 2")]
+        [DataRow("Hereditário", "Oito Mulheres e um Segredo")]
+        [DataRow("Deadpool 2", "Vingadores: Guerra Infinita")]
+        [DataRow("Han Solo: Uma História Star Wars", "Thor: Ragnarok")]
+        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Sucede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Um(string tituloFilmeA, string tituloFilmeB)
         {
             var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").Build();
             var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").Build();
