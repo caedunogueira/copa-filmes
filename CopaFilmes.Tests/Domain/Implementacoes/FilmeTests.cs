@@ -32,5 +32,16 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             Assert.IsFalse(filmeA.PossuiMaiorNota(filmeB));
         }
+
+        [TestMethod]
+        public void FilmeTests_Dado_Que_Filme_Possui_Mesmo_Titulo_Em_Relacao_Ao_Comparado_Quando_Compara_Retorna_Zero()
+        {
+            var filme = new Filme(id: "tt1245748", titulo: "Filme A", ano: 2018, nota: 8.5m);
+            var outroFilme = new Filme(id: "tt2532658", titulo: "Filme A", ano: 2019, nota: 6.7m);
+
+            var resultado = filme.CompareTo(outroFilme);
+
+            Assert.AreEqual(expected: 0, actual: resultado);
+        }
     }
 }

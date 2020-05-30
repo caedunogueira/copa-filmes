@@ -1,9 +1,10 @@
 ﻿
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
-    public class Filme
+    public class Filme : IComparable<Filme>
     {
         readonly string _id, _titulo;
         readonly int _ano;
@@ -15,6 +16,11 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             _titulo = titulo;
             _ano = ano;
             _nota = nota;
+        }
+
+        public int CompareTo([AllowNull] Filme other)
+        {
+            return 0;
         }
 
         public bool PossuiMaiorNota(Filme outroFilme)
