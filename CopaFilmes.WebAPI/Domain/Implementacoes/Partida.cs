@@ -17,7 +17,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal void Disputar()
         {
-            Vencedor = _primeiroFilme;
+            Vencedor = _primeiroFilme.PossuiNotaMaiorDoQue(_segundoFilme) ? _primeiroFilme : _segundoFilme;
         }
     }
 }
