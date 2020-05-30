@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes

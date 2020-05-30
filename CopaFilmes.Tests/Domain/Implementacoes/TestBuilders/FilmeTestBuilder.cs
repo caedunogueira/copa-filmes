@@ -1,5 +1,4 @@
-﻿
-using CopaFilmes.WebAPI.Domain.Implementacoes;
+﻿using CopaFilmes.WebAPI.Domain.Implementacoes;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
 {

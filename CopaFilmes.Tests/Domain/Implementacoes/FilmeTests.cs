@@ -1,6 +1,5 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
