@@ -1,5 +1,4 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
-using CopaFilmes.WebAPI.Domain.Implementacoes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
@@ -8,34 +7,34 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
     public class FilmeTests
     {
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Maior_Nota_Em_Relacao_Ao_Comparado_Quando_Consultar_Retorna_Verdadeiro()
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Maior_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Verdadeiro()
         {
             var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
             var filmeB = new FilmeTestBuilder().ComNota(6.7m).Build();
 
-            Assert.IsTrue(filmeA.PossuiMaiorNota(filmeB));
+            Assert.IsTrue(filmeA.PossuiNotaMaiorDoQue(filmeB));
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Menor_Em_Relacao_Ao_Comparado_Quando_Consultar_Retorna_Falso()
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Menor_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Falso()
         {
             var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
             var filmeB = new FilmeTestBuilder().ComNota(6.7m).Build();
 
-            Assert.IsFalse(filmeB.PossuiMaiorNota(filmeA));
+            Assert.IsFalse(filmeB.PossuiNotaMaiorDoQue(filmeA));
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Igual_Em_Relacao_Ao_Comparado_Quando_Consultar_Retorna_Falso()
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Igual_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Falso()
         {
             var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
             var filmeB = new FilmeTestBuilder().ComNota(8.5m).Build();
 
-            Assert.IsFalse(filmeA.PossuiMaiorNota(filmeB));
+            Assert.IsFalse(filmeA.PossuiNotaMaiorDoQue(filmeB));
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Mesmo_Titulo_Em_Relacao_Ao_Comparado_Quando_Compara_Retorna_Zero()
+        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Igual_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Zero()
         {
             var filme = new FilmeTestBuilder().ComTitulo("Filme A").Build();
             var outroFilme = new FilmeTestBuilder().ComTitulo("Filme A").Build();
@@ -46,7 +45,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Titulo_Que_Precede_Na_Ordenacao_Em_Relacao_Ao_Comparado_Quando_Compara_Retorna_Menos_Um()
+        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Precede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Menos_Um()
         {
             var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").Build();
             var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").Build();
@@ -57,7 +56,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Titulo_Que_Deve_Vir_Apos_Em_Relacao_Ao_Comparado_Para_Ordenacao_Quando_Compara_Retorna_Um()
+        public void FilmeTests_Dado_Ordenacao_Ascendente_Que_Filme_Possui_Titulo_Que_Sucede_Em_Relacao_Ao_Filme_Comparado_Quando_Sao_Comparados_Retorna_Um()
         {
             var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").Build();
             var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").Build();
