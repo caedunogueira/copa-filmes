@@ -10,12 +10,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
         int _ano = 2020;
         decimal _nota = 0.0m;
 
-        Filme filme;
-
-        internal Filme Build()
-        {
-            return new Filme(_id, _titulo, _ano, _nota);
-        }
+        internal Filme Build() => new Filme(_id, _titulo, _ano, _nota);
 
         internal FilmeTestBuilder ComNota(decimal nota)
         {
@@ -24,5 +19,11 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
             return this;
         }
 
+        internal FilmeTestBuilder ComTitulo(string titulo)
+        {
+            _titulo = titulo;
+
+            return this;
+        }
     }
 }
