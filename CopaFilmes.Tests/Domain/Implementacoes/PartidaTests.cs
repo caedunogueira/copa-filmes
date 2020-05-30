@@ -34,5 +34,17 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                 yield return new object[] { new FilmeTestBuilder().ComNota(8.8m).Build(), new FilmeTestBuilder().ComNota(8.5m).Build(), 1 };
             }
         }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Dois_Filmes_Com_Notas_Iguais_Quando_Disputarem_Uma_Partida_Retorna_Como_Vencedor_O_Filme_Em_Primeiro_Na_Ordem_Alfabetica_De_Titulo()
+        {
+            var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").ComNota(8.5m).Build();
+            var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partida = new Partida(filmeA, filmeB);
+
+            partida.Disputar();
+
+            Assert.AreEqual(expected: filmeA, actual: partida.Vencedor);
+        }
     }
 }

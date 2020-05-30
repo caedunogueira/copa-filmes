@@ -1,5 +1,6 @@
 ﻿
 using System.IO;
+using System.Linq;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
@@ -17,6 +18,13 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal void Disputar()
         {
+            if (!_primeiroFilme.PossuiNotaMaiorDoQue(_segundoFilme) && !_segundoFilme.PossuiNotaMaiorDoQue(_primeiroFilme))
+            {
+                Vencedor = new Filme[] { _primeiroFilme, _segundoFilme }.OrderBy(f => f)
+                                                                        .First();
+                return;
+            }
+
             Vencedor = _primeiroFilme.PossuiNotaMaiorDoQue(_segundoFilme) ? _primeiroFilme : _segundoFilme;
         }
     }
