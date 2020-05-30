@@ -20,7 +20,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public int CompareTo([AllowNull] Filme other)
         {
-            return 0;
+            return _titulo.CompareTo(other._titulo);
         }
 
         public bool PossuiMaiorNota(Filme outroFilme)
