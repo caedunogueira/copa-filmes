@@ -13,27 +13,20 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal Filme Campeao { get; private set; }
 
-        internal Eliminatorias(List<Filme> filmes)
-        {
-            _filmes = filmes;
-            _totalPartidas = _filmes.Count / 2;
-        }
+        internal Eliminatorias(List<Filme> filmes) => _filmes = filmes;
 
         internal void MontarChaveamento()
         {
-            _partidas = new Partida[_totalPartidas];
-
             _filmes = _filmes.OrderBy(f => f).ToList();
 
-            for (int i = 0, j = _filmes.Count, p = 0; i < j; i++, j--, p++)
-                _partidas[p] = new Partida(_filmes[i], _filmes[j - 1]);
+            DefinirPartidas(_filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
         }
 
         internal void JogarPartidas()
         {
             var vencedores = new List<Filme>();
 
-            while (_partidas.Length >= 1)
+            do
             {
                 vencedores.Clear();
 
@@ -43,17 +36,32 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
                     vencedores.Add(partida.Vencedor);
                 }
 
-                if (_partidas.Length == 1)
-                    break;
+                if (_partidas.Length == 1) break;
 
-                _totalPartidas = _partidas.Length / 2;
-                Array.Resize(ref _partidas, _totalPartidas);
-                
-                for (int i = 0, p = 0; p < _totalPartidas; i += 2, p++)
-                    _partidas[p] = new Partida(vencedores[i], vencedores[i + 1]);
-            }
+                DefinirPartidas(vencedores, ObterPosicaoPrimeiroParticipantePartidaDemaisFases, ObterPosicaoSegundoParticipantePartidaDemaisFases);
+
+            } while (_partidas.Length >= 1);
 
             Campeao = vencedores[0];
         }
+
+        private void DefinirPartidas(List<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, List<Filme>, int> posicaoSegundoParticipantePartida)
+        {
+            _totalPartidas = participantes.Count / 2;
+
+            Array.Resize(ref _partidas, _totalPartidas);
+
+            for (int i = 0, p = 0; p < _totalPartidas; i = posicaoPrimeiroParticipantePartida(i), p++)
+                _partidas[p] = new Partida(participantes[i], participantes[posicaoSegundoParticipantePartida(i, participantes)]);
+
+        }
+
+        private int ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase(int i) => ++i;
+
+        private int ObterPosicaoPrimeiroParticipantePartidaDemaisFases(int i) => i += 2;
+
+        private int ObterPosicaoSegundoParticipantePartidaPrimeiraFase(int i, List<Filme> participantes) => participantes.Count - (i + 1);
+
+        private int ObterPosicaoSegundoParticipantePartidaDemaisFases(int i, List<Filme> participantes) => i + 1;
     }
 }
