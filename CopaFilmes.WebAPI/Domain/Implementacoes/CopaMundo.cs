@@ -4,11 +4,12 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     public class CopaMundo
     {
+        Eliminatorias _eliminatorias;
         List<Filme> _filmes;
 
-        public Filme Campeao { get; private set; }
+        public Filme Campeao => _eliminatorias.Campeao;
 
-        public Filme ViceCampeao { get; private set; }
+        public Filme ViceCampeao => _eliminatorias.ViceCampeao;
 
         public void AdicionarFilme(Filme filme)
         {
@@ -19,8 +20,10 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public void Jogar()
         {
-            Campeao = _filmes[4];
-            ViceCampeao = _filmes[0];
+            _eliminatorias = new Eliminatorias(_filmes);
+
+            _eliminatorias.MontarChaveamento();
+            _eliminatorias.Jogar();
         }
     }
 }
