@@ -23,7 +23,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             DefinirPartidas(_filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
         }
 
-        internal void JogarPartidas()
+        internal void Jogar()
         {
             const int ULTIMA = 0;
 

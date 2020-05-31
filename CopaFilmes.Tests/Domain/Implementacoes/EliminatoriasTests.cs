@@ -15,7 +15,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         [DataRow(4, 0, 4)]
         [DataRow(5, 5, 3)]
         [DataRow(6, 7, 3)]
-        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogarem_As_Partidas_Define_Campeao(int cenario, int posicaoCampeao, int posicaoViceCampeao)
+        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogar_As_Eliminatorias_Define_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
             List<Filme> filmes = cenario switch
             {
@@ -31,10 +31,13 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var eliminatorias = new Eliminatorias(filmes);
 
             eliminatorias.MontarChaveamento();
-            eliminatorias.JogarPartidas();
+            eliminatorias.Jogar();
 
-            Assert.AreEqual(expected: filmes[posicaoCampeao], actual: eliminatorias.Campeao);
-            Assert.AreEqual(expected: filmes[posicaoViceCampeao], actual: eliminatorias.ViceCampeao);
+            Assert.AreEqual(expected: filmes[posicaoCampeao], actual: eliminatorias.Campeao,
+                $"Para cenário de teste {cenario} o campeão esperado é {filmes[posicaoCampeao].Titulo} e o campeão das eliminatórias foi {eliminatorias.Campeao.Titulo}.");
+
+            Assert.AreEqual(expected: filmes[posicaoViceCampeao], actual: eliminatorias.ViceCampeao,
+                $"Para cenário de teste {cenario} o vice-campeão esperado é {filmes[posicaoViceCampeao].Titulo} e o vice-campeão das eliminatórias foi {eliminatorias.ViceCampeao.Titulo}.");
         }
 
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()
