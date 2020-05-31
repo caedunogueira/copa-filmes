@@ -8,23 +8,23 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
     public class FilmeTests
     {
         [TestMethod]
-        [DynamicData(nameof(NotasEntreDoisFilmes), DynamicDataSourceType.Property)]
+        [DynamicData(nameof(NotasDistintasEntreDoisFilmes), DynamicDataSourceType.Property)]
         public void FilmeTests_Dado_Que_Filme_Possui_Nota_Maior_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Verdadeiro(decimal notaFilmeA, decimal notaFilmeB)
         {
             var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
-            Assert.IsTrue(filmeA.PossuiNotaMaior(filmeB));
+            Assert.IsTrue(filmeA.PossuiNotaMaior(filmeB), $"Filme A possui nota {notaFilmeA} e maior que Filme B que possui nota {notaFilmeB}.");
         }
 
         [TestMethod]
-        [DynamicData(nameof(NotasEntreDoisFilmes), DynamicDataSourceType.Property)]
+        [DynamicData(nameof(NotasDistintasEntreDoisFilmes), DynamicDataSourceType.Property)]
         public void FilmeTests_Dado_Que_Filme_Possui_Nota_Menor_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Maior_Retorna_Falso(decimal notaFilmeA, decimal notaFilmeB)
         {
             var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
-            Assert.IsFalse(filmeB.PossuiNotaMaior(filmeA));
+            Assert.IsFalse(filmeB.PossuiNotaMaior(filmeA), $"Filme A possui nota {notaFilmeA} e menor que Filme B possui nota {notaFilmeB}.");
         }
 
         [TestMethod]
@@ -47,18 +47,23 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Diferente_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Igual_Retorna_Falso()
+        [DynamicData(nameof(NotasDistintasEntreDoisFilmes), DynamicDataSourceType.Property)]
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Diferente_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Igual_Retorna_Falso(decimal notaFilmeA, decimal notaFilmeB)
         {
-            var filmeA = new FilmeTestBuilder().ComNota(8.4m).Build();
-            var filmeB = new FilmeTestBuilder().ComNota(8.5m).Build();
+            var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
+            var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
-            Assert.IsFalse(filmeA.PossuiNotaIgual(filmeB));
+            Assert.IsFalse(filmeA.PossuiNotaIgual(filmeB), $"Filme A possui nota {notaFilmeA} e Filme B possui nota {notaFilmeB}.");
         }
 
-        public static IEnumerable<object[]> NotasEntreDoisFilmes
+        /// <summary>
+        /// Propriedade utilizada de entrada para cenários de testes.
+        /// </summary>
+        public static IEnumerable<object[]> NotasDistintasEntreDoisFilmes
         {
             get
             {
+                yield return new object[] { 8.5m, 8.4m };
                 yield return new object[] { 8.8m, 8.1m };
                 yield return new object[] { 7.9m, 7.2m };
                 yield return new object[] { 8.5m, 7.8m };
@@ -93,7 +98,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             var resultado = filmeA.CompareTo(filmeB);
 
-            Assert.AreEqual(expected: -1, resultado);
+            Assert.AreEqual(expected: -1, resultado, $"Filme A com título {tituloFilmeA} precede Filme B com título {tituloFilmeB} como objeto comparado na ordenação.");
         }
 
         [TestMethod]
@@ -109,7 +114,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             var resultado = filmeB.CompareTo(filmeA);
 
-            Assert.AreEqual(expected: 1, resultado);
+            Assert.AreEqual(expected: 1, resultado, $"Filme A com título {tituloFilmeA} sucede Filme B com título {tituloFilmeB} como objeto comparado na ordenação.");
         }
     }
 }
