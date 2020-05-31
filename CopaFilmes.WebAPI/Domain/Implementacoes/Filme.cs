@@ -19,17 +19,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public int CompareTo([AllowNull] Filme other) => _titulo.CompareTo(other._titulo);
 
-        public bool PossuiNotaMaiorDoQue(Filme outroFilme)
-        {
-            if (_nota <= outroFilme._nota)
-                return false;
+        public bool PossuiNotaMaior(Filme outroFilme) => _nota > outroFilme._nota;
 
-            return true;
-        }
-
-        public bool PossuiNotaIgual(Filme outroFilme)
-        {
-            return _nota == outroFilme._nota;
-        }
+        public bool PossuiNotaIgual(Filme outroFilme) => _nota == outroFilme._nota;
     }
 }

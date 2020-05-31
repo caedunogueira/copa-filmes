@@ -14,7 +14,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
-            Assert.IsTrue(filmeA.PossuiNotaMaiorDoQue(filmeB));
+            Assert.IsTrue(filmeA.PossuiNotaMaior(filmeB));
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
 
-            Assert.IsFalse(filmeB.PossuiNotaMaiorDoQue(filmeA));
+            Assert.IsFalse(filmeB.PossuiNotaMaior(filmeA));
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
             var filmeB = new FilmeTestBuilder().ComNota(8.5m).Build();
 
-            Assert.IsFalse(filmeA.PossuiNotaMaiorDoQue(filmeB));
+            Assert.IsFalse(filmeA.PossuiNotaMaior(filmeB));
         }
 
 

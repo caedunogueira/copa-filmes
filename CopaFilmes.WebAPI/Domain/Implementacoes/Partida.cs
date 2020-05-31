@@ -18,14 +18,14 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal void Disputar()
         {
-            if (!_primeiroFilme.PossuiNotaMaiorDoQue(_segundoFilme) && !_segundoFilme.PossuiNotaMaiorDoQue(_primeiroFilme))
+            if (!_primeiroFilme.PossuiNotaMaior(_segundoFilme) && !_segundoFilme.PossuiNotaMaior(_primeiroFilme))
             {
                 Vencedor = new Filme[] { _primeiroFilme, _segundoFilme }.OrderBy(f => f)
                                                                         .First();
                 return;
             }
 
-            Vencedor = _primeiroFilme.PossuiNotaMaiorDoQue(_segundoFilme) ? _primeiroFilme : _segundoFilme;
+            Vencedor = _primeiroFilme.PossuiNotaMaior(_segundoFilme) ? _primeiroFilme : _segundoFilme;
         }
     }
 }
