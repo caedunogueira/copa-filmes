@@ -1,6 +1,4 @@
-﻿
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
