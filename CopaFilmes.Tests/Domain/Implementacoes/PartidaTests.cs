@@ -50,18 +50,23 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
         [TestMethod]
         [DynamicData(nameof(FilmesComNotasIguais), DynamicDataSourceType.Property)]
-        public void PartidaTests_Dado_Dois_Filmes_Com_Notas_Iguais_Quando_Disputarem_Uma_Partida_Retorna_Como_Vencedor_O_Filme_Em_Primeiro_Na_Ordem_Alfabetica_De_Titulo(string tituloFilmeA, decimal notaFilmeA, string tituloFilmeB, decimal notaFilmeB, int posicaoVencedor)
+        public void PartidaTests_Dado_Dois_Filmes_Com_Notas_Iguais_Quando_Disputarem_Uma_Partida_Retorna_Como_Vencedor_O_Filme_Em_Primeiro_Na_Ordem_Alfabetica_De_Titulo(string tituloFilmeA, decimal notaFilmeA, string tituloFilmeB, decimal notaFilmeB, int posicaoVencedor, int posicaoDerrotado)
         {
             var filmeA = new FilmeTestBuilder().ComTitulo(tituloFilmeA).ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComTitulo(tituloFilmeB).ComNota(notaFilmeB).Build();
             var partida = new Partida(filmeA, filmeB);
             var vencedorEsperado = posicaoVencedor == 1 ? filmeA : filmeB;
+            var derrotadoEsperado = posicaoDerrotado == 1 ? filmeA : filmeB;
             var nomeVariavelVencedorEsperado = posicaoVencedor == 1 ? nameof(filmeA) : nameof(filmeB);
+            var nomeVariavelDerrotadoEsperado = posicaoDerrotado == 1 ? nameof(filmeA) : nameof(filmeB);
 
             partida.Disputar();
 
             Assert.AreEqual(expected: vencedorEsperado, actual: partida.Vencedor,
-                $"O vencedor esperado é a instância de Filme da variável {nomeVariavelVencedorEsperado} porque o titulo do Filme A é {tituloFilmeA} e o titulo do Filme B é {tituloFilmeB}.");
+                $"O vencedor esperado é a instância de Filme da variável {nomeVariavelVencedorEsperado} porque o titulo do Filme A é \"{tituloFilmeA}\" e o titulo do Filme B é \"{tituloFilmeB}\".");
+
+            Assert.AreEqual(expected: derrotadoEsperado, actual: partida.Derrotado,
+                $"O derrotado esperado é a instância de Filme da variável {nomeVariavelDerrotadoEsperado} porque o titulo do Filme A é \"{tituloFilmeA}\" e o titulo do Filme B é \"{tituloFilmeB}\".");
         }
 
         /// <summary>
@@ -71,11 +76,11 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             get
             {
-                yield return new object[] { "Filme A", 8.5m, "Filme B", 8.5m, 1 };
-                yield return new object[] { "Deadpool 2", 8.5m, "Vingadores: Guerra Finita", 8.5m, 1 };
-                yield return new object[] { "Han Solo: Uma História Star Wars", 8.5m, "Thor: Ragnarok", 8.5m, 1 };
-                yield return new object[] { "Hereditário", 8.5m, "Os Incríveis 2", 8.5m, 1 };
-                yield return new object[] { "Jurassic World: Reino Ameaçado", 8.5m, "Oito Mulheres e um Segredo", 8.5m, 1 };
+                yield return new object[] { "Filme A", 8.5m, "Filme B", 8.5m, 1, 2 };
+                yield return new object[] { "Deadpool 2", 8.5m, "Vingadores: Guerra Finita", 8.5m, 1, 2 };
+                yield return new object[] { "Thor: Ragnarok", 8.5m, "Han Solo: Uma História Star Wars", 8.5m, 2, 1 };
+                yield return new object[] { "Os Incríveis 2", 8.5m, "Hereditário", 8.5m, 2, 1 };
+                yield return new object[] { "Jurassic World: Reino Ameaçado", 8.5m, "Oito Mulheres e um Segredo", 8.5m, 1, 2 };
             }
         }
     }

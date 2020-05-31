@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
@@ -20,21 +21,16 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         {
             if (_primeiroFilme.PossuiNotaIgual(_segundoFilme))
             {
-                Vencedor = new Filme[] { _primeiroFilme, _segundoFilme }
-                    .OrderBy(f => f)
-                    .First();
+                var filmes = new Filme[] { _primeiroFilme, _segundoFilme };
+
+                Vencedor = filmes.OrderBy(f => f).First();
+                Derrotado = filmes.OrderBy(f => f).Last();
             }
             else
             {
-                Vencedor = _primeiroFilme.PossuiNotaMaior(_segundoFilme)
-                    ? _primeiroFilme
-                    : _segundoFilme;
-
-                Derrotado = _primeiroFilme.PossuiNotaMaior(_segundoFilme)
-                    ? _segundoFilme
-                    : _primeiroFilme;
+                Vencedor = _primeiroFilme.PossuiNotaMaior(_segundoFilme) ? _primeiroFilme : _segundoFilme;
+                Derrotado = _primeiroFilme.PossuiNotaMaior(_segundoFilme) ? _segundoFilme : _primeiroFilme;
             }
-                
         }
     }
 }
