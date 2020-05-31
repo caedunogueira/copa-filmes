@@ -9,13 +9,13 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
     public class EliminatoriasTests
     {
         [TestMethod]
-        [DataRow(1, 4, 0)]
+        [DataRow(1, 7, 5)]
         [DataRow(2, 6, 2)]
-        [DataRow(3, 0, 5)]
-        [DataRow(4, 0, 4)]
-        [DataRow(5, 5, 3)]
-        [DataRow(6, 7, 3)]
-        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogar_As_Eliminatorias_Define_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
+        [DataRow(3, 4, 6)]
+        [DataRow(4, 5, 7)]
+        [DataRow(5, 0, 2)]
+        [DataRow(6, 0, 2)]
+        public void EliminatoriasTests_Dado_Filmes_Selecionados_Apos_Montar_Chaveamento_Quando_Jogar_As_Eliminatorias_Define_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
             List<Filme> filmes = cenario switch
             {
@@ -30,7 +30,6 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             var eliminatorias = new Eliminatorias(filmes);
 
-            eliminatorias.MontarChaveamento();
             eliminatorias.Jogar();
 
             Assert.AreEqual(expected: filmes[posicaoCampeao], actual: eliminatorias.Campeao,
@@ -44,14 +43,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
-                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
-                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
-                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
-                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build(),
                 new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
                 new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
-                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
+                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
+                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build()
             };
         }
 
@@ -59,14 +58,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
+                new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(6.4m).Build(),
+                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
                 new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
                 new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
-                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
-                new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(6.4m).Build(),
-                new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build(),
-                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
                 new FilmeTestBuilder().ComTitulo("Pantera Negra: A Origem").ComNota(7.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build()
             };
         }
 
@@ -74,14 +73,15 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
-                new FilmeTestBuilder().ComTitulo("Os Incríveis").ComNota(8.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
                 new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
                 new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
-                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
-                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
-                new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Os Incríveis").ComNota(8.5m).Build(),
                 new FilmeTestBuilder().ComTitulo("Pantera Negra: A Origem").ComNota(7.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build()
+                
             };
         }
 
@@ -89,14 +89,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
-                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
-                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
-                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
-                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.5m).Build(),
                 new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
                 new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
-                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
+                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
+                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.5m).Build()
             };
         }
 
@@ -104,14 +104,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
-                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
-                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
-                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.7m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(8.5m).Build(),
-                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build(),
                 new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.8m).Build(),
                 new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.9m).Build(),
-                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(8.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.7m).Build(),
+                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
+                new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build()
             };
         }
 
@@ -119,14 +119,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             return new List<Filme>
             {
-                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(10m).Build(),
+                new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(10m).Build(),
+                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(10m).Build(),
+                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(10m).Build(),
                 new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(10m).Build(),
                 new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(10m).Build(),
-                new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(10m).Build(),
-                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(10m).Build(),
-                new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(10m).Build(),
+                new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(10m).Build(),
                 new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(10m).Build(),
-                new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(10m).Build(),
+                new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(10m).Build()
             };
         }
     }

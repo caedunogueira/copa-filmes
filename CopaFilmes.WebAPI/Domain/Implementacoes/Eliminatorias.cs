@@ -16,18 +16,15 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal Eliminatorias(List<Filme> filmes) => _filmes = filmes;
 
-        internal void MontarChaveamento()
-        {
-            _filmes = _filmes.OrderBy(f => f).ToList();
-
-            DefinirPartidas(_filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
-        }
+        internal void MontarChaveamento() => _filmes = _filmes.OrderBy(f => f).ToList();
 
         internal void Jogar()
         {
             const int ULTIMA = 0;
 
             var vencedores = new List<Filme>();
+
+            DefinirPartidas(_filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
 
             do
             {
