@@ -29,7 +29,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public bool PossuiNotaIgual(Filme outroFilme)
         {
-            return true;
+            return _nota == outroFilme._nota;
         }
     }
 }
