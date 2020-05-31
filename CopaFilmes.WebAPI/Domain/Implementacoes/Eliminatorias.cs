@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     internal class Eliminatorias
     {
+        private int _totalPartidas;
         private List<Filme> _filmes;
         private Partida[] _partidas;
 
@@ -14,36 +16,44 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         internal Eliminatorias(List<Filme> filmes)
         {
             _filmes = filmes;
+            _totalPartidas = _filmes.Count / 2;
         }
 
         internal void MontarChaveamento()
         {
-            _partidas = new Partida[4];
-            
+            _partidas = new Partida[_totalPartidas];
+
             _filmes = _filmes.OrderBy(f => f).ToList();
 
-            _partidas[0] = new Partida(_filmes[0], _filmes[7]);
-            _partidas[1] = new Partida(_filmes[1], _filmes[6]);
-            _partidas[2] = new Partida(_filmes[2], _filmes[5]);
-            _partidas[3] = new Partida(_filmes[3], _filmes[4]);
+            for (int i = 0, j = _filmes.Count, p = 0; i < j; i++, j--, p++)
+                _partidas[p] = new Partida(_filmes[i], _filmes[j - 1]);
         }
 
         internal void JogarPartidas()
         {
-            foreach (var partida in _partidas)
-                partida.Disputar();
+            var vencedores = new List<Filme>();
 
-            var novasPartidas = new Partida[2];
-            novasPartidas[0] = new Partida(_partidas[0].Vencedor, _partidas[1].Vencedor);
-            novasPartidas[1] = new Partida(_partidas[2].Vencedor, _partidas[3].Vencedor);
+            while (_partidas.Length >= 1)
+            {
+                vencedores.Clear();
 
-            foreach (var partida in novasPartidas)
-                partida.Disputar();
+                foreach (var partida in _partidas)
+                {
+                    partida.Disputar();
+                    vencedores.Add(partida.Vencedor);
+                }
 
-            var ultimaPartida = new Partida(novasPartidas[0].Vencedor, novasPartidas[1].Vencedor);
-            ultimaPartida.Disputar();
+                if (_partidas.Length == 1)
+                    break;
 
-            Campeao = ultimaPartida.Vencedor;
+                _totalPartidas = _partidas.Length / 2;
+                Array.Resize(ref _partidas, _totalPartidas);
+                
+                for (int i = 0, p = 0; p < _totalPartidas; i += 2, p++)
+                    _partidas[p] = new Partida(vencedores[i], vencedores[i + 1]);
+            }
+
+            Campeao = vencedores[0];
         }
     }
 }
