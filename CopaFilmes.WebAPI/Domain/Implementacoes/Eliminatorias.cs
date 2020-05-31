@@ -56,8 +56,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             Array.Resize(ref _partidas, _totalPartidas);
 
             for (int i = 0, p = 0; p < _totalPartidas; i = posicaoPrimeiroParticipantePartida(i), p++)
-                _partidas[p] = new Partida(participantes[i], participantes[posicaoSegundoParticipantePartida(i, participantes)]);
-
+                _partidas[p] = new Partida(this, participantes[i], participantes[posicaoSegundoParticipantePartida(i, participantes)]);
         }
 
         private int ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase(int i) => ++i;

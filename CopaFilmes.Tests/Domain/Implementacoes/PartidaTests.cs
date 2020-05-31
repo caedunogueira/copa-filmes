@@ -1,5 +1,4 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
-using CopaFilmes.WebAPI.Domain.Implementacoes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -14,7 +13,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var filmeA = new FilmeTestBuilder().ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComNota(notaFilmeB).Build();
-            var partida = new Partida(filmeA, filmeB);
+            var partida = new PartidaTestBuilder().ComFilme(filmeA).ComFilme(filmeB).Build();
             var vencedorEsperado = posicaoVencedor == 1 ? filmeA : filmeB;
             var derrotadoEsperado = posicaoDerrotado == 1 ? filmeA : filmeB;
             var nomeVariavelVencedorEsperado = posicaoVencedor == 1 ? nameof(filmeA) : nameof(filmeB);
@@ -54,7 +53,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var filmeA = new FilmeTestBuilder().ComTitulo(tituloFilmeA).ComNota(notaFilmeA).Build();
             var filmeB = new FilmeTestBuilder().ComTitulo(tituloFilmeB).ComNota(notaFilmeB).Build();
-            var partida = new Partida(filmeA, filmeB);
+            var partida = new PartidaTestBuilder().ComFilme(filmeA).ComFilme(filmeB).Build();
             var vencedorEsperado = posicaoVencedor == 1 ? filmeA : filmeB;
             var derrotadoEsperado = posicaoDerrotado == 1 ? filmeA : filmeB;
             var nomeVariavelVencedorEsperado = posicaoVencedor == 1 ? nameof(filmeA) : nameof(filmeB);
