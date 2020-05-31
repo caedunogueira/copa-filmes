@@ -1,9 +1,7 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Xml;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
 {
@@ -12,36 +10,15 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
     {
         [TestMethod]
         [DynamicData(nameof(FilmesSelecionadosParaEliminatorias), DynamicDataSourceType.Property)]
-        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogarem_As_Partidas_Define_Campeao(List<Filme> filmes, int posicaoFilmeCampeao)
+        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogarem_As_Partidas_Define_Campeao(List<Filme> filmes, int posicaoCampeao, int posicaoViceCampeao)
         {
             var eliminatorias = new Eliminatorias(filmes);
 
             eliminatorias.MontarChaveamento();
             eliminatorias.JogarPartidas();
 
-            Assert.AreEqual(expected: filmes[posicaoFilmeCampeao], actual: eliminatorias.Campeao);
-        }
-
-        [TestMethod]
-        public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogarem_As_Partidas_Define_Vice_Campeao()
-        {
-            var filmes = new List<Filme>
-                    {
-                        new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
-                        new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
-                    };
-            var eliminatorias = new Eliminatorias(filmes);
-
-            eliminatorias.MontarChaveamento();
-            eliminatorias.JogarPartidas();
-
-            Assert.AreEqual(expected: filmes[0], actual: eliminatorias.ViceCampeao);
+            Assert.AreEqual(expected: filmes[posicaoCampeao], actual: eliminatorias.Campeao);
+            Assert.AreEqual(expected: filmes[posicaoViceCampeao], actual: eliminatorias.ViceCampeao);
         }
 
         public static IEnumerable<object[]> FilmesSelecionadosParaEliminatorias
@@ -60,8 +37,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
                         new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
-                    },
-                    4
+                    }
+                    , 4
+                    , 0
                 };
                 yield return new object[]
                 {
@@ -75,8 +53,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build(),
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
                         new FilmeTestBuilder().ComTitulo("Pantera Negra: A Origem").ComNota(7.5m).Build(),
-                    },
-                    6
+                    }
+                    , 6
+                    , 2
                 };
                 yield return new object[]
                 {
@@ -90,8 +69,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
                         new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build(),
                         new FilmeTestBuilder().ComTitulo("Pantera Negra: A Origem").ComNota(7.5m).Build(),
-                    },
-                    0
+                    }
+                    , 0
+                    , 5
                 };
                 yield return new object[]
                 {
@@ -105,8 +85,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
                         new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
-                    },
-                    0
+                    }
+                    , 0
+                    , 4
                 };
                 yield return new object[]
                 {
@@ -120,8 +101,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.8m).Build(),
                         new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.9m).Build(),
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
-                    },
-                    5
+                    }
+                    , 5
+                    , 3
                 };
                 yield return new object[]
                 {
@@ -135,8 +117,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                         new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(10m).Build(),
                         new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(10m).Build(),
                         new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(10m).Build(),
-                    },
-                    7
+                    }
+                    , 7
+                    , 3
                 };
             }
         }

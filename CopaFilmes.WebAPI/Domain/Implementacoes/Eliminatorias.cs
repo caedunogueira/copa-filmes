@@ -26,6 +26,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal void JogarPartidas()
         {
+            const int ULTIMA_PARTIDA = 0;
+
             var vencedores = new List<Filme>();
 
             do
@@ -44,8 +46,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
             } while (_partidas.Length >= 1);
 
-            Campeao = vencedores[0];
-            ViceCampeao = _filmes[5];
+            Campeao = _partidas[ULTIMA_PARTIDA].Vencedor;
+            ViceCampeao = _partidas[ULTIMA_PARTIDA].Derrotado;
         }
 
         private void DefinirPartidas(List<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, List<Filme>, int> posicaoSegundoParticipantePartida)
