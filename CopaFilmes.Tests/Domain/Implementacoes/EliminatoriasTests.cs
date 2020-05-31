@@ -17,17 +17,15 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         [DataRow(6, 7, 3)]
         public void EliminatoriasTests_Dado_Filmes_Selecionados_Quando_Jogarem_As_Partidas_Define_Campeao(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
-            List<Filme> filmes;
-
-            switch(cenario)
+            List<Filme> filmes = cenario switch
             {
-                case 1: filmes = ObterFilmesParaPrimeiroCenarioTestes(); break;
-                case 2: filmes = ObterFilmesParaSegundoCenarioTestes(); break;
-                case 3: filmes = ObterFilmesParaTerceiroCenarioTestes(); break;
-                case 4: filmes = ObterFilmesParaQuartoCenarioTestes(); break;
-                case 5: filmes = ObterFilmesParaQuintoCenarioTestes(); break;
-                case 6: filmes = ObterFilmesParaSextoCenarioTestes(); break;
-                default: filmes = null; break;
+                1 => ObterFilmesParaPrimeiroCenarioTestes(),
+                2 => ObterFilmesParaSegundoCenarioTestes(),
+                3 => ObterFilmesParaTerceiroCenarioTestes(),
+                4 => ObterFilmesParaQuartoCenarioTestes(),
+                5 => ObterFilmesParaQuintoCenarioTestes(),
+                6 => ObterFilmesParaSextoCenarioTestes(),
+                _ => null,
             };
 
             var eliminatorias = new Eliminatorias(filmes);
