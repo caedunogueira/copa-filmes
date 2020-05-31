@@ -36,6 +36,16 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             Assert.IsFalse(filmeA.PossuiNotaMaiorDoQue(filmeB));
         }
 
+
+        [TestMethod]
+        public void FilmeTests_Dado_Que_Filme_Possui_Nota_Igual_Em_Relacao_Ao_Filme_Comparado_Quando_Consultar_Se_Possui_Nota_Igual_Retorna_True()
+        {
+            var filmeA = new FilmeTestBuilder().ComNota(8.5m).Build();
+            var filmeB = new FilmeTestBuilder().ComNota(8.5m).Build();
+
+            Assert.IsTrue(filmeA.PossuiNotaIgual(filmeB));
+        }
+
         public static IEnumerable<object[]> NotasEntreDoisFilmes
         {
             get
