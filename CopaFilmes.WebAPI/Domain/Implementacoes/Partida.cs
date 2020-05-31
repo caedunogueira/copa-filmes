@@ -4,7 +4,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     internal class Partida
     {
-        readonly Filme _primeiroFilme, _segundoFilme;
+        private readonly Filme _primeiroFilme, _segundoFilme;
 
         internal Filme Vencedor { get; private set; }
 
