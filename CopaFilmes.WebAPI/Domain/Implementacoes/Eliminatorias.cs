@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +25,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal void JogarPartidas()
         {
-            const int ULTIMA_PARTIDA = 0;
+            const int ULTIMA = 0;
 
             var vencedores = new List<Filme>();
 
@@ -46,8 +45,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
             } while (_partidas.Length >= 1);
 
-            Campeao = _partidas[ULTIMA_PARTIDA].Vencedor;
-            ViceCampeao = _partidas[ULTIMA_PARTIDA].Derrotado;
+            Campeao = _partidas[ULTIMA].Vencedor;
+            ViceCampeao = _partidas[ULTIMA].Derrotado;
         }
 
         private void DefinirPartidas(List<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, List<Filme>, int> posicaoSegundoParticipantePartida)
