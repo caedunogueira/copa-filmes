@@ -13,6 +13,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal Filme Campeao { get; private set; }
 
+        internal Filme ViceCampeao { get; private set; }
+
         internal Eliminatorias(List<Filme> filmes) => _filmes = filmes;
 
         internal void MontarChaveamento()
@@ -43,6 +45,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             } while (_partidas.Length >= 1);
 
             Campeao = vencedores[0];
+            ViceCampeao = _filmes[5];
         }
 
         private void DefinirPartidas(List<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, List<Filme>, int> posicaoSegundoParticipantePartida)
