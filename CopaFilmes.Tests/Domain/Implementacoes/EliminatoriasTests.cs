@@ -54,6 +54,66 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                     },
                     6
                 };
+                yield return new object[]
+                {
+                    new List<Filme>
+                    {
+                        new FilmeTestBuilder().ComTitulo("Os Incríveis").ComNota(8.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Tomb Raider: A Origem").ComNota(6.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Pantera Negra: A Origem").ComNota(7.5m).Build(),
+                    },
+                    0
+                };
+                yield return new object[]
+                {
+                    new List<Filme>
+                    {
+                        new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.3m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(7.8m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.1m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.2m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
+                    },
+                    0
+                };
+                yield return new object[]
+                {
+                    new List<Filme>
+                    {
+                        new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(8.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(6.7m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(6.7m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(8.5m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(8.8m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Deadpool 2").ComNota(8.8m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(7.9m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(7.9m).Build()
+                    },
+                    5
+                };
+                yield return new object[]
+                {
+                    new List<Filme>
+                    {
+                        new FilmeTestBuilder().ComTitulo("Os Incríveis 2").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Jurassic World: Reino Ameaçado").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Oito Mulheres e um Segredo").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Hereditário").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Vingadores: Guerra Infinita").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Han Solo: Uma História Star Wars").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("Thor: Ragnarok").ComNota(10m).Build(),
+                        new FilmeTestBuilder().ComTitulo("A Barraca do Beijo").ComNota(10m).Build(),
+                    },
+                    7
+                };
             }
         }
     }
