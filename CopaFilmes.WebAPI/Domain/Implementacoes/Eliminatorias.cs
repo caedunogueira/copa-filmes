@@ -6,17 +6,18 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     internal class Eliminatorias
     {
+        private readonly CopaMundo _copaMundo;
+
         private int _totalPartidas;
-        private List<Filme> _filmes;
         private Partida[] _partidas;
 
         internal Filme Campeao { get; private set; }
 
         internal Filme ViceCampeao { get; private set; }
 
-        internal Eliminatorias(List<Filme> filmes) => _filmes = filmes;
+        internal Eliminatorias(CopaMundo copaMundo) => _copaMundo = copaMundo;
 
-        internal void MontarChaveamento() => _filmes = _filmes.OrderBy(f => f).ToList();
+        internal void MontarChaveamento() => _copaMundo.OrdenarFilmes();
 
         internal void Jogar()
         {
@@ -24,7 +25,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
             var vencedores = new List<Filme>();
 
-            DefinirPartidas(_filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
+            DefinirPartidas(_copaMundo.Filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
 
             do
             {
@@ -46,22 +47,22 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             ViceCampeao = _partidas[ULTIMA].Derrotado;
         }
 
-        private void DefinirPartidas(List<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, List<Filme>, int> posicaoSegundoParticipantePartida)
+        private void DefinirPartidas(IReadOnlyCollection<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, IReadOnlyCollection<Filme>, int> posicaoSegundoParticipantePartida)
         {
             _totalPartidas = participantes.Count / 2;
 
             Array.Resize(ref _partidas, _totalPartidas);
 
             for (int i = 0, p = 0; p < _totalPartidas; i = posicaoPrimeiroParticipantePartida(i), p++)
-                _partidas[p] = new Partida(this, participantes[i], participantes[posicaoSegundoParticipantePartida(i, participantes)]);
+                _partidas[p] = new Partida(this, participantes.ElementAt(i), participantes.ElementAt(posicaoSegundoParticipantePartida(i, participantes)));
         }
 
         private int ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase(int i) => ++i;
 
         private int ObterPosicaoPrimeiroParticipantePartidaDemaisFases(int i) => i += 2;
 
-        private int ObterPosicaoSegundoParticipantePartidaPrimeiraFase(int i, List<Filme> participantes) => participantes.Count - (i + 1);
+        private int ObterPosicaoSegundoParticipantePartidaPrimeiraFase(int i, IReadOnlyCollection<Filme> participantes) => participantes.Count - (i + 1);
 
-        private int ObterPosicaoSegundoParticipantePartidaDemaisFases(int i, List<Filme> participantes) => i + 1;
+        private int ObterPosicaoSegundoParticipantePartidaDemaisFases(int i, IReadOnlyCollection<Filme> participantes) => i + 1;
     }
 }

@@ -4,10 +4,10 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
 {
     internal class FilmeTestBuilder
     {
-        string _id = "tt1245748";
-        string _titulo = "Filme A";
-        int _ano = 2020;
-        decimal _nota = 0.0m;
+        private string _id = "tt1245748";
+        private string _titulo = "Filme A";
+        private int _ano = 2020;
+        private decimal _nota = 0.0m;
 
         internal Filme Build() => new Filme(_id, _titulo, _ano, _nota);
 

@@ -17,7 +17,9 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         [DataRow(6, 0, 2)]
         public void EliminatoriasTests_Dado_Filmes_Selecionados_Apos_Montar_Chaveamento_Quando_Jogar_As_Eliminatorias_Define_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
-            List<Filme> filmes = cenario switch
+            var copaMundo = new CopaMundo();
+            var eliminatorias = new Eliminatorias(copaMundo);
+            var filmes = cenario switch
             {
                 1 => ObterFilmesParaPrimeiroCenarioTestes(),
                 2 => ObterFilmesParaSegundoCenarioTestes(),
@@ -28,7 +30,8 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                 _ => null,
             };
 
-            var eliminatorias = new Eliminatorias(filmes);
+            foreach (var filme in filmes)
+                copaMundo.Adicionar(filme);
 
             eliminatorias.Jogar();
 

@@ -5,20 +5,31 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
 {
     internal class PartidaTestBuilder
     {
-        List<Filme> filmes;
-        Eliminatorias eliminatorias;
+        private readonly CopaMundo _copaMundo;
+        private readonly Eliminatorias _eliminatorias;
+
+        private List<Filme> _filmes;
 
         internal PartidaTestBuilder()
         {
-            filmes = new List<Filme>();
-            eliminatorias = new Eliminatorias(filmes);
+            _filmes = new List<Filme>();
+            _copaMundo = new CopaMundo();
+            _eliminatorias = new Eliminatorias(_copaMundo);
         }
 
-        internal Partida Build() => new Partida(eliminatorias, filmes[0], filmes[1]);
+        internal Partida Build()
+        {
+            foreach (var filme in _filmes)
+                _copaMundo.Adicionar(filme);
+
+            return new Partida(_eliminatorias, _filmes[0], _filmes[1]);
+        }
 
         internal PartidaTestBuilder ComFilme(Filme filme)
         {
-            filmes.Add(filme);
+            _filmes ??= new List<Filme>();
+
+            _filmes.Add(filme);
 
             return this;
         }

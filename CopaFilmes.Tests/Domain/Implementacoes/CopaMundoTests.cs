@@ -18,7 +18,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         public void CopaMundoTests_Dado_Filmes_Selecionados_Quando_Jogar_A_Copa_Define_O_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
             var copaMundo = new CopaMundo();
-            List<Filme> filmes = cenario switch
+            var filmes = cenario switch
             {
                 1 => ObterFilmesParaPrimeiroCenarioTestes(),
                 2 => ObterFilmesParaSegundoCenarioTestes(),
@@ -29,8 +29,8 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                 _ => null,
             };
 
-            foreach (var filme in filmes)
-                copaMundo.AdicionarFilme(filme);
+            foreach (var filme in filmes) 
+                copaMundo.Adicionar(filme);
 
             copaMundo.Jogar();
 
