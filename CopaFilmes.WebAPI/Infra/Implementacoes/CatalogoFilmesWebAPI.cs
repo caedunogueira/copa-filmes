@@ -8,13 +8,13 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
 {
     internal class CatalogoFilmesWebAPI : ICatalogoFilmes
     {
-        internal CatalogoFilmesWebAPI(string enderecoAPI)
-        {
+        private readonly string _enderecoAPI;
 
-        }
+        internal CatalogoFilmesWebAPI(string enderecoAPI) => _enderecoAPI = enderecoAPI;
 
         public IReadOnlyCollection<Filme> ObterPorIds(List<string> ids)
         {
+
             return new List<Filme>
             {
                 new Filme("tt3606756", "Filme A", 2018, 10m),
