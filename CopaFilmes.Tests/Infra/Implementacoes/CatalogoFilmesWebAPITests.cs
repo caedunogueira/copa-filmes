@@ -25,10 +25,10 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
             var idsFilmes = new List<string> { "tt3606756", "tt4881806", "tt5164214", "tt7784604", "tt4154756", "tt5463162", "tt3778644", "tt3501632" };
             var filmes = await catalogo.ObterPorIds(idsFilmes);
 
-            Assert.AreEqual(expected: 8, actual: filmes.Count);
+            Assert.AreEqual(expected: 8, actual: filmes.Count, $"Quantidade de filmes esperados é 8 e a quantidade de filmes obtidos com filtro foi {filmes.Count}.");
 
             foreach (var id in idsFilmes)
-                Assert.IsTrue(filmes.Any(f => f.Id == id));
+                Assert.IsTrue(filmes.Any(f => f.Id == id), $"O filme com Id {id} encontra-se entre os filmes retornados da busca.");
         }
 
         private string ObterExemploJsonResposta()
