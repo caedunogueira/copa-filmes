@@ -5,18 +5,19 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     public class Filme : IComparable<Filme>
     {
-        private readonly string _id;
         private readonly int _ano;
         private readonly decimal _nota;
+
+        public string Id { get; private set; }
 
         public string Titulo { get; private set; }
 
         public Filme(string id, string titulo, int ano, decimal nota)
         {
-            _id = id;
             _ano = ano;
             _nota = nota;
 
+            Id = id;
             Titulo = titulo;
         }
 
