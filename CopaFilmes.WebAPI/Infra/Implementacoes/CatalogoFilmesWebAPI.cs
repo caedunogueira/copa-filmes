@@ -1,6 +1,7 @@
 ﻿
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using CopaFilmes.WebAPI.Domain.Interfaces;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -10,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace CopaFilmes.WebAPI.Infra.Implementacoes
 {
-    internal class CatalogoFilmesWebAPI : ICatalogoFilmes
+    public class CatalogoFilmesWebAPI : ICatalogoFilmes
     {
         private readonly HttpClient _httpClient;
         private readonly OpcoesCatalogoFilmes _opcoes;
 
-        internal CatalogoFilmesWebAPI(HttpClient httpClient, OpcoesCatalogoFilmes opcoes)
+        public CatalogoFilmesWebAPI(HttpClient httpClient, IOptions<OpcoesCatalogoFilmes> opcoes)
         {
             _httpClient = httpClient;
-            _opcoes = opcoes;
+            _opcoes = opcoes.Value;
         }
 
         public async Task<IReadOnlyCollection<Filme>> ObterPorIds(List<string> ids)

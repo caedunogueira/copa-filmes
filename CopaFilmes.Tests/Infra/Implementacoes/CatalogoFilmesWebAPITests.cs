@@ -1,7 +1,9 @@
 ﻿using CopaFilmes.Tests.Infra.Fakes;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using CopaFilmes.WebAPI.Infra.Implementacoes;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,10 +19,9 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
         [TestMethod]
         public async Task CatalogFilmesWebAPITests_Dado_Conjunto_De_Ids_De_Filmes_Quando_Consultar_API_Retorna_Filmes_Relacionados_Aos_Ids()
         {
-            var opcoes = new OpcoesCatalogoFilmes { EnderecoAPI = "http://copafilmes.azurewebsites.net/api/filmes" };
             var messageHandler = new MockHttpMessageHandler(ObterExemploJsonResposta(), HttpStatusCode.OK);
             var httpClient = new HttpClient(messageHandler);
-            var catalogo = new CatalogoFilmesWebAPI(httpClient, opcoes);
+            var catalogo = new CatalogoFilmesWebAPI(httpClient, ObterOpcoesCatalogoFilmes());
             
             var idsFilmes = new List<string> { "tt3606756", "tt4881806", "tt5164214", "tt7784604", "tt4154756", "tt5463162", "tt3778644", "tt3501632" };
             var filmes = await catalogo.ObterPorIds(idsFilmes);
@@ -29,6 +30,15 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
 
             foreach (var id in idsFilmes)
                 Assert.IsTrue(filmes.Any(f => f.Id == id), $"O filme com Id {id} encontra-se entre os filmes retornados da busca.");
+        }
+
+        private IOptions<OpcoesCatalogoFilmes> ObterOpcoesCatalogoFilmes()
+        {
+            var opcoes = Substitute.For<IOptions<OpcoesCatalogoFilmes>>();
+
+            _ = opcoes.Value.Returns(new OpcoesCatalogoFilmes { EnderecoAPI = "http://copafilmes.azurewebsites.net/api/filmes" });
+
+            return opcoes;
         }
 
         private string ObterExemploJsonResposta()
