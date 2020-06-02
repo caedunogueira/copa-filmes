@@ -36,18 +36,20 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
         [TestMethod]
         public async Task CatalogoFilmesWebAPITests_Dado_Solicitacao_Para_Obter_Todos_Filmes_Quando_Consultar_API_Valida_Serializacao_Dos_Filmes()
         {
+            const int OS_INCRIVEIS = 0;
+
             var messageHandler = new MockHttpMessageHandler(ObterExemploJsonResposta(), HttpStatusCode.OK);
             var httpClient = new HttpClient(messageHandler);
             var catalogo = new CatalogoFilmesWebAPI(httpClient, ObterOpcoesCatalogoFilmes());
 
             var filmes = await catalogo.ObterTodos();
 
-            Assert.AreEqual(expected: 16, filmes.Count);
+            Assert.AreEqual(expected: 16, filmes.Count, "obtido todos os 16 filmes do exemplo de JSON de resposta fornecido no teste.");
 
-            Assert.AreEqual(expected: "tt3606756", filmes.ElementAt(0).Id);
-            Assert.AreEqual(expected: "Os Incríveis 2", filmes.ElementAt(0).Titulo);
-            Assert.AreEqual(expected: 2018, filmes.ElementAt(0).Ano);
-            Assert.IsTrue(filmes.ElementAt(0).PossuiNotaIgual(new FilmeTestBuilder().ComNota(8.5m).Build()));
+            Assert.AreEqual(expected: "tt3606756", filmes.ElementAt(OS_INCRIVEIS).Id, "o Id do filme \"Os Incríveis 2\" está correto.");
+            Assert.AreEqual(expected: "Os Incríveis 2", filmes.ElementAt(OS_INCRIVEIS).Titulo, "o Id do filme \"Os Incríveis 2\" está correto.");
+            Assert.AreEqual(expected: 2018, filmes.ElementAt(OS_INCRIVEIS).Ano, "o Id do filme \"Os Incríveis 2\" está correto.");
+            Assert.IsTrue(filmes.ElementAt(OS_INCRIVEIS).PossuiNotaIgual(new FilmeTestBuilder().ComNota(8.5m).Build()), "o Id do filme \"Os Incríveis 2\" está correto.");
         }
 
         private IOptions<OpcoesCatalogoFilmes> ObterOpcoesCatalogoFilmes()
