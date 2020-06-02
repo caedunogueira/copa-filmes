@@ -33,13 +33,10 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
             if (response.IsSuccessStatusCode)
             {
                 var stream = await response.Content.ReadAsStreamAsync();
-                var elementosJson = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
+                var elementos = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
 
-                foreach (var filmeAux in elementosJson)
-                    filmes.Add(new Filme(filmeAux.GetProperty("id").GetString(),
-                               filmeAux.GetProperty("titulo").GetString(),
-                               filmeAux.GetProperty("ano").GetInt32(),
-                               filmeAux.GetProperty("nota").GetDecimal()));
+                foreach (var elemento in elementos)
+                    filmes.Add(CriarFilme(elemento));
             }
 
             return filmes.AsReadOnly();
@@ -57,18 +54,23 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
             if (response.IsSuccessStatusCode)
             {
                 var stream = await response.Content.ReadAsStreamAsync();
-                var elementosJson = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
+                var elementos = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
 
-                foreach (var filmeAux in elementosJson)
-                    filmes.Add(new Filme(filmeAux.GetProperty("id").GetString(),
-                               filmeAux.GetProperty("titulo").GetString(),
-                               filmeAux.GetProperty("ano").GetInt32(),
-                               filmeAux.GetProperty("nota").GetDecimal()));
+                foreach (var elemento in elementos)
+                    filmes.Add(CriarFilme(elemento));
 
                 filmes = filmes.Where(f => ids.Contains(f.Id)).ToList();
             }
 
             return filmes.AsReadOnly();
+        }
+
+        private Filme CriarFilme(JsonElement elemento)
+        {
+            return new Filme(elemento.GetProperty("id").GetString(),
+                elemento.GetProperty("titulo").GetString(),
+                elemento.GetProperty("ano").GetInt32(),
+                elemento.GetProperty("nota").GetDecimal());
         }
     }
 }
