@@ -13,24 +13,21 @@ namespace CopaFilmes.Tests.Controllers
     public class CopaMundoControllerTests
     {
         [TestMethod]
-        public void CopaMundoControllerTests_Dado_Oito_Ids_De_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Jogar_Retorna_Campeao_E_Vice()
+        public async Task CopaMundoControllerTests_Dado_Oito_Ids_De_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Jogar_Retorna_Campeao_E_Vice()
         {
-            const int OS_INCRIVEIS = 0;
-            const int VINGADORES = 4;
-
             var filmes = ObterFilmesParaCenarioTestes();
             var catalogo = Substitute.For<ICatalogoFilmes>();
             var controller = new CopaMundoController(catalogo);
             
             catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(filmes);
 
-            var resultadoAcao = controller.Get(string.Empty);
-            var resultadoCopa = resultadoAcao.Result.Value;
+            var resultadoAcao = await controller.Get(string.Empty);
+            var resultadoCopa = resultadoAcao.Value;
 
-            catalogo.Received().ObterPorIds(Arg.Any<List<string>>());
+            _ = catalogo.Received().ObterPorIds(Arg.Any<List<string>>());
 
-            Assert.AreEqual(expected: filmes[VINGADORES], actual: resultadoCopa.Campeao);
-            Assert.AreEqual(expected: filmes[OS_INCRIVEIS], actual: resultadoCopa.ViceCampeao);
+            Assert.IsNotNull(resultadoCopa?.Campeao, "existe informação de campeão pois não é nulo.");
+            Assert.IsNotNull(resultadoCopa?.ViceCampeao, "existe informação de vice-campeão pois não é nulo.");
         }
 
         [TestMethod]
