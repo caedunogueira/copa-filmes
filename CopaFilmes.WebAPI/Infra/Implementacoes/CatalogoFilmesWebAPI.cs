@@ -22,9 +22,28 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
             _opcoes = opcoes.Value;
         }
 
-        public Task<IReadOnlyCollection<Filme>> ObterTodos()
+        public async Task<IReadOnlyCollection<Filme>> ObterTodos()
         {
-            throw new System.NotImplementedException();
+            var filmes = new List<Filme>();
+
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.GetAsync(_opcoes.EnderecoAPI);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var stream = await response.Content.ReadAsStreamAsync();
+                var elementosJson = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
+
+                foreach (var filmeAux in elementosJson)
+                    filmes.Add(new Filme(filmeAux.GetProperty("id").GetString(),
+                               filmeAux.GetProperty("titulo").GetString(),
+                               filmeAux.GetProperty("ano").GetInt32(),
+                               filmeAux.GetProperty("nota").GetDecimal()));
+            }
+
+            return filmes.AsReadOnly();
         }
 
         public async Task<IReadOnlyCollection<Filme>> ObterPorIds(List<string> ids)

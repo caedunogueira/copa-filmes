@@ -1,4 +1,5 @@
-﻿using CopaFilmes.Tests.Infra.Fakes;
+﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
+using CopaFilmes.Tests.Infra.Fakes;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using CopaFilmes.WebAPI.Infra.Implementacoes;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,7 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
     public class CatalogoFilmesWebAPITests
     {
         [TestMethod]
-        public async Task CatalogFilmesWebAPITests_Dado_Conjunto_De_Ids_De_Filmes_Quando_Consultar_API_Retorna_Filmes_Relacionados_Aos_Ids()
+        public async Task CatalogoFilmesWebAPITests_Dado_Conjunto_De_Ids_De_Filmes_Quando_Consultar_API_Retorna_Filmes_Relacionados_Aos_Ids()
         {
             var messageHandler = new MockHttpMessageHandler(ObterExemploJsonResposta(), HttpStatusCode.OK);
             var httpClient = new HttpClient(messageHandler);
@@ -30,6 +31,23 @@ namespace CopaFilmes.Tests.Infra.Implementacoes
 
             foreach (var id in idsFilmes)
                 Assert.IsTrue(filmes.Any(f => f.Id == id), $"O filme com Id {id} encontra-se entre os filmes retornados da busca.");
+        }
+
+        [TestMethod]
+        public async Task CatalogoFilmesWebAPITests_Dado_Solicitacao_Para_Obter_Todos_Filmes_Quando_Consultar_API_Valida_Serializacao_Dos_Filmes()
+        {
+            var messageHandler = new MockHttpMessageHandler(ObterExemploJsonResposta(), HttpStatusCode.OK);
+            var httpClient = new HttpClient(messageHandler);
+            var catalogo = new CatalogoFilmesWebAPI(httpClient, ObterOpcoesCatalogoFilmes());
+
+            var filmes = await catalogo.ObterTodos();
+
+            Assert.AreEqual(expected: 16, filmes.Count);
+
+            Assert.AreEqual(expected: "tt3606756", filmes.ElementAt(0).Id);
+            Assert.AreEqual(expected: "Os Incríveis 2", filmes.ElementAt(0).Titulo);
+            Assert.AreEqual(expected: 2018, filmes.ElementAt(0).Ano);
+            Assert.IsTrue(filmes.ElementAt(0).PossuiNotaIgual(new FilmeTestBuilder().ComNota(8.5m).Build()));
         }
 
         private IOptions<OpcoesCatalogoFilmes> ObterOpcoesCatalogoFilmes()
