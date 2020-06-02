@@ -1,5 +1,4 @@
-﻿
-using CopaFilmes.WebAPI.Domain.Implementacoes;
+﻿using CopaFilmes.WebAPI.Domain.Implementacoes;
 using CopaFilmes.WebAPI.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
