@@ -5,6 +5,7 @@ using CopaFilmes.WebAPI.Domain.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CopaFilmes.Tests.Controllers
 {
@@ -30,6 +31,21 @@ namespace CopaFilmes.Tests.Controllers
 
             Assert.AreEqual(expected: filmes[VINGADORES], actual: resultadoCopa.Campeao);
             Assert.AreEqual(expected: filmes[OS_INCRIVEIS], actual: resultadoCopa.ViceCampeao);
+        }
+
+        [TestMethod]
+        public async Task CopaMundoControllerTests_Dado_Solicitacao_Para_Obter_Filmes_Disponiveis_Para_Disputa_Quando_Consumir_Endpoint_Filmes_Retorna_Lista_Filmes()
+        {
+            var catalogo = Substitute.For<ICatalogoFilmes>();
+            var controller = new CopaMundoController(catalogo);
+
+            catalogo.ObterTodos().Returns(new List<Filme>());
+
+            var resultado = await controller.Get();
+
+            _ = catalogo.Received().ObterTodos();
+
+            Assert.IsInstanceOfType(value: resultado, expectedType: typeof(IReadOnlyCollection<Filme>));
         }
 
         private List<Filme> ObterFilmesParaCenarioTestes()

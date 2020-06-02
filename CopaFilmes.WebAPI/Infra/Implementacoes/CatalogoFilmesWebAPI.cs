@@ -22,6 +22,11 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
             _opcoes = opcoes.Value;
         }
 
+        public Task<IReadOnlyCollection<Filme>> ObterTodos()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<IReadOnlyCollection<Filme>> ObterPorIds(List<string> ids)
         {
             var filmes = new List<Filme>();

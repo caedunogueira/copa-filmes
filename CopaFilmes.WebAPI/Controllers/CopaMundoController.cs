@@ -17,6 +17,15 @@ namespace CopaFilmes.WebAPI.Controllers
         public CopaMundoController(ICatalogoFilmes catalogoFilmes) => _catalogoFilmes = catalogoFilmes;
 
         [HttpGet]
+        [Route("api/[controller]/filmes-disponiveis")]
+        public async Task<IReadOnlyCollection<Filme>> Get()
+        {
+            var filmes = await _catalogoFilmes.ObterTodos();
+
+            return filmes;
+        }
+
+        [HttpGet]
         [Route("api/[controller]/jogar/{idsFilmesSelecionados}")]
         public async Task<ActionResult<CopaMundo>> Get(string idsFilmesSelecionados)
         {

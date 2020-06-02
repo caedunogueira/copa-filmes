@@ -6,6 +6,8 @@ namespace CopaFilmes.WebAPI.Domain.Interfaces
 {
     public interface ICatalogoFilmes
     {
+        public Task<IReadOnlyCollection<Filme>> ObterTodos();
+
         public Task<IReadOnlyCollection<Filme>> ObterPorIds(List<string> ids);
     }
 }
