@@ -16,7 +16,9 @@ namespace CopaFilmes.Tests.Infra.Fakes
             _statusCode = statusCode;
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             => new HttpResponseMessage { StatusCode = _statusCode, Content = new StringContent(_response) };
     }
 }
