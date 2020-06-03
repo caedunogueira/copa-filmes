@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ConteudoComponent } from './conteudo/conteudo.component';
 import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { FilmesComponent } from './filmes/filmes.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FilmesComponent } from './filmes/filmes.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
