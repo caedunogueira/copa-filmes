@@ -19,6 +19,10 @@ export class FilmesComponent implements OnInit {
   constructor(private copaMundoService: CopamundoService) { }
 
   ngOnInit(): void {
+    this.obterFilmesDisponiveis();
+  }
+
+  private obterFilmesDisponiveis(): void {
     this.copaMundoService.obterFilmes()
       .subscribe(filmes => this.filmes = filmes);
   }
@@ -46,6 +50,5 @@ export class FilmesComponent implements OnInit {
     }
 
     this.listaIdsFilmesSelecionados = this.listaIdsFilmesSelecionados.substr(1);
-    console.log(this.listaIdsFilmesSelecionados);
   }
 }
