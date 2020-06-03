@@ -2,7 +2,7 @@
     <div>
         <div class="totalFilmes">
             <p class="textoSelecionados">Selecionados</p>
-            <p class="contadorFilmes">0 de 8 filmes</p>
+            <p class="contadorFilmes">{{totalFilmesSelecionados()}} de 8 filmes</p>
         </div>
         <div class="gerarCampeonato">
             <nav>
@@ -18,7 +18,9 @@
     <div class="conteudoFilme" *ngFor="let filme of filmes">
         <table>
             <tr>
-                <td><input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme.id, opcaoSelecaoFilme.checked)"/></td>
+                <td>
+                    <input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme, $event)"/>
+                </td>
                 <td>
                     <p class="tituloFilme">{{filme.titulo}}</p>
                     <p class="anoFilme">{{filme.ano}}</p>

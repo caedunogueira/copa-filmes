@@ -5,6 +5,8 @@
 #app-filmes .totalFilmes {
     width: 82%;
     float: left;
+    color: white;
+    font-weight: bold;
 }
 
 #app-filmes .totalFilmes .textoSelecionados {

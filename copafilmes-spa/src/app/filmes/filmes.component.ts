@@ -27,15 +27,23 @@ export class FilmesComponent implements OnInit {
       .subscribe(filmes => this.filmes = filmes);
   }
 
-  alterarFilmesSelecionados(id: string, opcao: boolean): void {
-    if (opcao)
-      this.idsFilmesSelecionados.push(id);
+  totalFilmesSelecionados(): number {
+    return this.idsFilmesSelecionados.length;
+  }
+
+  alterarFilmesSelecionados(elementoCheckBox: any, eventoCheckBox: any): void {
+    if (elementoCheckBox.checked && this.idsFilmesSelecionados.length === 8) {
+      elementoCheckBox.checked = false;
+      eventoCheckBox.preventDefault();
+    }
+    else if (elementoCheckBox.checked)
+      this.idsFilmesSelecionados.push(elementoCheckBox.id);
     else {
-      const indice = this.idsFilmesSelecionados.indexOf(id);
+      const indice = this.idsFilmesSelecionados.indexOf(elementoCheckBox.id);
       if (indice !== -1)
         this.idsFilmesSelecionados.splice(indice, 1);
     }
-
+    
     this.montarListaIdsFilmesSelecionados();
   }
 
