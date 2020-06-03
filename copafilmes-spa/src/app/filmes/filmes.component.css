@@ -1,0 +1,49 @@
+#app-filmes {
+    overflow: hidden;
+}
+
+#app-filmes .totalFilmes {
+    width: 82%;
+    float: left;
+}
+
+#app-filmes .totalFilmes .textoSelecionados {
+    margin: 10px 0px 0px 0px;
+}
+
+#app-filmes .totalFilmes .contadorFilmes {
+    margin: 0px;
+}
+
+#app-filmes .gerarCampeonato {
+    width: 15%;
+    text-align: center;
+    padding: 1%;
+    float: left;
+    background-color: black;
+}
+
+#app-filmes .gerarCampeonato span {
+    color: white;
+    font-weight: bold;
+    font-size: small;
+}
+
+#app-filmes .conteudoFilme {
+    float: left;
+    width: 20%;
+    background-color: white;
+    margin: 1% 1% 1% 1%;
+}
+
+#app-filmes .conteudoFilme p.tituloFilme {
+    font-weight: bold;
+    font-size: smaller;
+    margin-bottom: 0px;
+}
+
+#app-filmes .conteudoFilme p.anoFilme {
+    font-weight: bold;
+    font-size: x-small;
+    margin-top: 0px;
+}

@@ -1,0 +1,7 @@
+#app-root {
+    background-color: darkgray;
+}
+
+#app-root * {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

@@ -1,9 +1,30 @@
-<p>filmes works!</p>
-<div *ngFor="let filme of filmes">
-    <input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme.id, opcaoSelecaoFilme.checked)"/> {{filme.titulo}} | {{filme.ano}}
+<div id="app-filmes">
+    <div>
+        <div class="totalFilmes">
+            <p class="textoSelecionados">Selecionados</p>
+            <p class="contadorFilmes">0 de 8 filmes</p>
+        </div>
+        <div class="gerarCampeonato">
+            <nav>
+                <a routerLink="/copamundo/jogar/{{listaIdsFilmesSelecionados}}">
+                    <span>
+                        GERAR MEU CAMPEONATO
+                    </span>
+                </a>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="conteudoFilme" *ngFor="let filme of filmes">
+        <table>
+            <tr>
+                <td><input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme.id, opcaoSelecaoFilme.checked)"/></td>
+                <td>
+                    <p class="tituloFilme">{{filme.titulo}}</p>
+                    <p class="anoFilme">{{filme.ano}}</p>
+                </td>
+            </tr>
+        </table>
+     </div>
 </div>
-<div>
-    <nav>
-        <a routerLink="/copamundo/jogar/{{listaIdsFilmesSelecionados}}">Jogar</a>
-    </nav>
-</div>
+

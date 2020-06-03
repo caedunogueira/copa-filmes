@@ -1,0 +1,25 @@
+#app-cabecalho {
+    padding: 0% 25% 3% 25%;
+    background-color: dimgray;
+}
+
+#app-cabecalho * {
+    text-align: center;
+}
+
+#app-cabecalho h3 {
+    color: gray;
+}
+
+#app-cabecalho p {
+    color: white;
+    font-weight: bold;
+}
+
+#app-cabecalho p.mensagem-fase {
+    font-size: xx-large;
+}
+
+#app-cabecalho p.mensagem-instrucao {
+    font-size: small;
+}
