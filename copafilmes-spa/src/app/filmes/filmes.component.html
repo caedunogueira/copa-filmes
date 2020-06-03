@@ -2,3 +2,8 @@
 <div *ngFor="let filme of filmes">
     <input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme.id, opcaoSelecaoFilme.checked)"/> {{filme.titulo}} | {{filme.ano}}
 </div>
+<div>
+    <nav>
+        <a routerLink="/copamundo/jogar/{{listaIdsFilmesSelecionados}}">Jogar</a>
+    </nav>
+</div>

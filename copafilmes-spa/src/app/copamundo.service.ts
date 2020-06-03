@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Filme } from './filme';
+import { CopaMundo } from './copamundo';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,17 @@ export class CopamundoService {
 
   obterFilmes(): Observable<Filme[]> {
     const url = `${this.enderecoAPI}/filmes-disponiveis`;
-    console.log('url requisitada: ' + url);
+    
     return this.http.get<Filme[]>(url).pipe(
       catchError(this.handleError<Filme[]>([]))
+    );
+  }
+
+  obterResultado(ids: string): Observable<CopaMundo> {
+    const url = `${this.enderecoAPI}/jogar/${ids}`;
+
+    return this.http.get<CopaMundo>(url).pipe(
+      catchError(this.handleError<CopaMundo>())
     );
   }
 

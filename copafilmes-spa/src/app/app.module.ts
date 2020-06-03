@@ -7,13 +7,15 @@ import { ConteudoComponent } from './conteudo/conteudo.component';
 import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { FilmesComponent } from './filmes/filmes.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ResultadoComponent } from './resultado/resultado.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConteudoComponent,
     CabecalhoComponent,
-    FilmesComponent
+    FilmesComponent,
+    ResultadoComponent
   ],
   imports: [
     BrowserModule,
