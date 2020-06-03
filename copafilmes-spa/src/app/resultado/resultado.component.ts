@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { CopamundoService } from '../copamundo.service';
 import { CopaMundo } from '../copamundo';
@@ -15,7 +16,8 @@ export class ResultadoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private copaMundoService: CopamundoService
+    private copaMundoService: CopamundoService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -26,5 +28,9 @@ export class ResultadoComponent implements OnInit {
     const ids = this.route.snapshot.paramMap.get('ids');
     this.copaMundoService.obterResultado(ids)
       .subscribe(copaMundo => this.copaMundo = copaMundo);
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }
