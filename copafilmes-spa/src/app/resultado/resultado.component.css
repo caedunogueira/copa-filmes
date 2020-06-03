@@ -1,0 +1,25 @@
+#app-resultado .jogarNovamente {
+    margin: 10px 0px 30px 0px;
+}
+
+#app-resultado .jogarNovamente button {
+    width: 15%;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    height: 50px;
+}
+
+#app-resultado .posicaoParticipante {
+    float: left;
+    padding: 20px;
+    background-color: dimgray;
+    color: white;
+}
+
+#app-resultado .tituloParticipante {
+    padding: 20px;
+    background-color: white;
+    margin-left: 3.7%;
+}

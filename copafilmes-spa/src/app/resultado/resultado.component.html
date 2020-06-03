@@ -1,10 +1,14 @@
 <app-cabecalho [mensagemFase]="faseResultadoFinal" [mensagemInstrucao]="instrucaoResultado"></app-cabecalho>
-<div>
-    <button (click)="voltar()">Jogar novamente</button>
-</div>
-<div>
-    <span>1º - </span>{{copaMundo.campeao.titulo}}
-</div>
-<div>
-    <span>2º - </span>{{copaMundo.viceCampeao.titulo}}
+<div id="app-resultado">
+    <div class="jogarNovamente">
+        <button (click)="voltar()">JOGAR NOVAMENTE</button>
+    </div>
+    <div class="vencedor">
+        <span class="posicaoParticipante">1º</span>
+        <p class="tituloParticipante">{{copaMundo.campeao.titulo}}</p> 
+    </div>
+    <div class="vencedor">
+        <span class="posicaoParticipante">2º</span>
+        <p class="tituloParticipante">{{copaMundo.viceCampeao.titulo}}</p>
+    </div>
 </div>
