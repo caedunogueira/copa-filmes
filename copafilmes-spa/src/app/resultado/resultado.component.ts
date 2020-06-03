@@ -14,6 +14,9 @@ export class ResultadoComponent implements OnInit {
 
   copaMundo: CopaMundo;
 
+  faseResultadoFinal: string = "Resultado Final";
+  instrucaoResultado: string = "Veja o resultado final do Campeonato de filmes de forma simples e rápida";
+
   constructor(
     private route: ActivatedRoute,
     private copaMundoService: CopamundoService,
