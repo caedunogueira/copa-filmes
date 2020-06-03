@@ -1,1 +1,4 @@
 <p>filmes works!</p>
+<div *ngFor="let filme of filmes$ | async">
+    <input #opcaoSelecaoFilme type="checkbox" [id]="filme.id" (change)="alterarFilmesSelecionados(opcaoSelecaoFilme.id, opcaoSelecaoFilme.checked)"/> {{filme.titulo}} | {{filme.ano}}
+</div>
