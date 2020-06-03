@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cabecalho',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CabecalhoComponent implements OnInit {
 
+  @Input() mensagemFase: string;
+  @Input() mensagemInstrucao: string;
+  
   constructor() { }
 
   ngOnInit(): void {

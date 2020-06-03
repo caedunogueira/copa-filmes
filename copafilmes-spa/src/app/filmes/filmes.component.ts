@@ -15,6 +15,8 @@ export class FilmesComponent implements OnInit {
 
   filmes: Filme[];
   listaIdsFilmesSelecionados: string = "";
+  faseSelecao: string = "Fase de Seleção";
+  instrucaoSelecao: string = "Selecione 8 filmes que você deseja que entrem na competição e depois pressione o botão Gerar Meu Campeonato para prosseguir.";
 
   constructor(private copaMundoService: CopamundoService) { }
 
