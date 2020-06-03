@@ -13,12 +13,13 @@ export class FilmesComponent implements OnInit {
 
   private idsFilmesSelecionados: string[] = [];
 
-  filmes$: Observable<Filme[]>;
+  filmes: Filme[];
 
   constructor(private copaMundoService: CopamundoService) { }
 
   ngOnInit(): void {
-    this.filmes$ = this.copaMundoService.obterFilmes();
+    this.copaMundoService.obterFilmes()
+      .subscribe(filmes => this.filmes = filmes);
   }
 
   alterarFilmesSelecionados(id: string, opcao: boolean): void {
