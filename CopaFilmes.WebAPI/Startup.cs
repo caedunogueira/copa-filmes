@@ -18,6 +18,8 @@ namespace CopaFilmes.WebAPI
 {
     public class Startup
     {
+        public readonly string PoliticaOrigemCopaMundoSPA = "_origemCopaMundoSPA";
+
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
@@ -27,6 +29,15 @@ namespace CopaFilmes.WebAPI
         {
             services.Configure<OpcoesCatalogoFilmes>(Configuration.GetSection(OpcoesCatalogoFilmes.CatalogoFilmes));
             services.AddHttpClient<ICatalogoFilmes, CatalogoFilmesWebAPI>();
+
+            services.AddCors(opcoes =>
+            {
+                opcoes.AddPolicy(PoliticaOrigemCopaMundoSPA,
+                    builder =>
+                    {
+                        builder.WithOrigins(Configuration.GetSection("SPA:Endereco").Value);
+                    });
+            });
 
             services.AddControllers();
         }
@@ -42,6 +53,8 @@ namespace CopaFilmes.WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(PoliticaOrigemCopaMundoSPA);
 
             app.UseEndpoints(endpoints =>
             {
