@@ -23,7 +23,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             {
                 if (!_jogou)
                     throw new InvalidOperationException("Operação inválida. O campeão somente estará disponível quando as eliminatórias forem jogadas.");
-
+                
                 return _campeao;
             }
         }
@@ -34,17 +34,21 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             {
                 if (!_jogou)
                     throw new InvalidOperationException("Operação inválida. O vice-campeão somente estará disponível quando as eliminatórias forem jogadas.");
-
+                
                 return _viceCampeao;
             }
         }
 
         internal Eliminatorias(CopaMundo copaMundo)
         {
+            if (copaMundo == null)
+                throw new ArgumentNullException(nameof(copaMundo), "Argumento inválido. Deve-se fornecer uma instância da classe CopaMundo.");
+
+            _copaMundo = copaMundo;
             _montouChaveamento = false;
             _jogou = false;
 
-            _copaMundo = copaMundo;
+            
         }
 
         internal void MontarChaveamento()
@@ -60,12 +64,12 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
             var vencedores = new List<Filme>();
 
+            _jogou = false;
+
             if (!_montouChaveamento)
                 throw new InvalidOperationException("Operação inválida. É necessário primeiro montar o chaveamento para, somente então, realizar as partidas das eliminatórias.");
 
-            _jogou = false;
             DefinirPartidas(_copaMundo.Filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
-
             do
             {
                 vencedores.Clear();

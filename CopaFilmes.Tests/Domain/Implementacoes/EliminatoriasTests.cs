@@ -122,6 +122,29 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             });
         }
 
+        [TestMethod]
+        public void EliminatoriasTests_Dado_Nulo_Argumento_Copa_Do_Mundo_Quando_Instanciar_Lanca_Excecao()
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = new Eliminatorias(null);
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "copaMundo")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()
         {
             return new List<Filme>
