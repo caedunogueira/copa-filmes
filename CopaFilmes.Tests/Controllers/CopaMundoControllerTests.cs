@@ -94,7 +94,7 @@ namespace CopaFilmes.Tests.Controllers
             _ = catalogo.Received().ObterTodos();
 
             Assert.IsNotNull(resultadoOk, "há uma instância da classe OkObjectResult.");
-            Assert.AreEqual(expected: 200, actual: resultadoOk.StatusCode, "o código de status de resposta é 200.");
+            Assert.AreEqual(expected: 200, actual: resultadoOk.StatusCode, message: "o código de status de resposta é 200.");
             Assert.IsNotNull(filmes, "há uma instância no corpo da resposta da classe CopaMundo.");
         }
 
