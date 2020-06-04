@@ -16,12 +16,12 @@ namespace CopaFilmes.Tests.Controllers
         [TestMethod]
         public async Task CopaMundoControllerTests_Dado_Request_Oito_Ids_De_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Jogar_Retorna_Campeao_E_Vice()
         {
-            var oitoFilmes = ObterFilmesParaCenarioTestes();
+            var filmes = ObterFilmesParaCenarioTestes();
             var catalogo = Substitute.For<ICatalogoFilmes>();
             var controller = new CopaMundoController(catalogo);
             var ids = "tt3606756,tt4881806,tt5164214,tt7784604,tt4154756,tt5463162,tt3778644,tt3501632";
 
-            _ = catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(oitoFilmes);
+            _ = catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(filmes);
 
             var resultadoAcao = await controller.Get(ids);
             var resultadoOk = resultadoAcao as OkObjectResult;
@@ -49,8 +49,34 @@ namespace CopaFilmes.Tests.Controllers
             _ = catalogo.DidNotReceive().ObterPorIds(Arg.Any<List<string>>());
 
             Assert.IsNotNull(resultadoBadRequest, "há uma instância da classe BadRequestObjectResult.");
-            Assert.AreEqual(expected: 400, actual: resultadoBadRequest.StatusCode, "o código de status de resposta é 400.");
-            Assert.AreEqual(expected: "Requisição incorreta pois não foi identificado 8 ids de filmes para o torneio.", actual: resultadoMensagem, "a mensagem de resposta do Bad Request está correta.");
+            Assert.AreEqual(expected: 400, actual: resultadoBadRequest.StatusCode, message: "o código de status de resposta é 400.");
+            Assert.AreEqual(expected: "Requisição incorreta pois não foi identificado 8 ids de filmes para o torneio.", 
+                            actual: resultadoMensagem,
+                            message: "a mensagem de resposta do Bad Request está correta.");
+        }
+
+        [TestMethod]
+        public async Task CopaMundoControllerTests_Dado_Request_Com_Oito_Ids_Mas_Que_O_Catalogo_Retorne_Quantidade_Diferente_de_Oito_Para_Jogar_A_Copa_Quando_Consumir_Retorna_Not_Found()
+        {
+            var filmes = ObterFilmesParaCenarioTestes();
+            var catalogo = Substitute.For<ICatalogoFilmes>();
+            var controller = new CopaMundoController(catalogo);
+            var ids = "tt3606756,tt4881806,tt5164214,tt7784604,tt4154756,tt5463162,tt3778644,tt3501632";
+
+            filmes.RemoveAt(filmes.Count - 1);
+            _ = catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(filmes);
+
+            var resultadoAcao = await controller.Get(ids);
+            var resultadoNotFound = resultadoAcao as NotFoundObjectResult;
+            var resultadoMensagem = resultadoNotFound?.Value as string;
+
+            _ = catalogo.Received().ObterPorIds(Arg.Any<List<string>>());
+
+            Assert.IsNotNull(resultadoNotFound, "há uma instância da classe NotFoundObjectResult.");
+            Assert.AreEqual(expected: 404, actual: resultadoNotFound.StatusCode, "o código de status de resposta é 404.");
+            Assert.AreEqual(expected: "Requisição inválida pois um ou mais filmes dentre os Ids informados não consta(m) no catálogo de filmes.", 
+                            actual: resultadoMensagem, 
+                            message: "a mensagem de resposta do Not Found está correta.");
         }
 
         [TestMethod]

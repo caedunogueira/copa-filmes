@@ -37,6 +37,9 @@ namespace CopaFilmes.WebAPI.Controllers
 
             var filmes = await _catalogoFilmes.ObterPorIds(ids);
 
+            if (filmes.Count != 8)
+                return NotFound("Requisição inválida pois um ou mais filmes dentre os Ids informados não consta(m) no catálogo de filmes.");
+
             foreach (var filme in filmes)
                 copaMundo.Adicionar(filme);
 
