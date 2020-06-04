@@ -1,6 +1,7 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
@@ -39,6 +40,32 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             Assert.AreEqual(expected: filmes[posicaoViceCampeao], actual: copaMundo.ViceCampeao,
                 $"Para cenário de teste {cenario} o vice-campeão esperado é {filmes[posicaoViceCampeao].Titulo} e o vice-campeão da copa do mundo foi {copaMundo.ViceCampeao.Titulo}.");
+        }
+
+        [TestMethod]
+        public void CopaMundoTests_Dado_Que_A_Quantidade_De_Filmes_Selecionados_Difere_De_Oito_Quando_Jogar_Lanca_Excecao()
+        {
+            var copaMundo = new CopaMundo();
+
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    copaMundo.Jogar();
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == "É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
+                                           $"identificados para seleção foi {copaMundo.Filmes?.Count}")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
         }
 
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()

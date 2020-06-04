@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CopaFilmes.WebAPI.Domain.Implementacoes
@@ -8,7 +9,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         List<Filme> _filmes;
         Eliminatorias _eliminatorias;
 
-        internal IReadOnlyCollection<Filme> Filmes => _filmes.AsReadOnly();
+        internal IReadOnlyCollection<Filme> Filmes => _filmes;
 
         public Filme Campeao => _eliminatorias.Campeao;
 
@@ -25,8 +26,12 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public void Jogar()
         {
-            _eliminatorias = new Eliminatorias(this);
+            if (_filmes?.Count != 8)
+                throw new InvalidOperationException("É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
+                                                    $"identificados para seleção foi {_filmes?.Count}");
 
+            _eliminatorias = new Eliminatorias(this);
+            
             _eliminatorias.MontarChaveamento();
             _eliminatorias.Jogar();
         }
