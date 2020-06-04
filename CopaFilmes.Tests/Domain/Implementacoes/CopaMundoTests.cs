@@ -55,28 +55,27 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var copaMundo = new CopaMundo();
 
-            for (var i = 1; i <= quantidadeFilmes; i++)
-                copaMundo.Adicionar(new FilmeTestBuilder().Build());
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+              {
+                  try
+                  {
+                      for (var i = 1; i <= quantidadeFilmes; i++)
+                          copaMundo.Adicionar(filme: new FilmeTestBuilder().Build());
 
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    copaMundo.Jogar();
-                }
-                catch (InvalidOperationException excecao)
-                {
-                    if (excecao.Message == "É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
-                                           $"identificados para seleção foi {copaMundo.Filmes?.Count}")
-                        throw;
+                      copaMundo.Jogar();
+                  }
+                  catch (InvalidOperationException excecao)
+                  {
+                      if (excecao.Message == "Operação inválida. É necessário adicionar 8 filmes para jogar a copa do mundo.")
+                          throw;
 
-                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
-                }
-                catch (Exception excecao)
-                {
-                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
-                }
-            });
+                      Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                  }
+                  catch (Exception excecao)
+                  {
+                      Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                  }
+              });
         }
 
         [TestMethod]
@@ -91,25 +90,25 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var copaMundo = new CopaMundo();
 
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    for (var i = 1; i <= quantidadeFilmes; i++)
-                        copaMundo.Adicionar(new FilmeTestBuilder().Build());
-                }
-                catch (InvalidOperationException excecao)
-                {
-                    if (excecao.Message == $"Não é possível adicionar um novo filme pois a quantidade de filmes selecionados para jogar a copa já foi atingida.")
-                        throw;
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+              {
+                  try
+                  {
+                      for (var i = 1; i <= quantidadeFilmes; i++)
+                          copaMundo.Adicionar(filme: new FilmeTestBuilder().Build());
+                  }
+                  catch (InvalidOperationException excecao)
+                  {
+                      if (excecao.Message == $"Operação inválida. Somente é possível adicionar até 8 filmes para etapa de seleção da copa do mundo.")
+                          throw;
 
-                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
-                }
-                catch (Exception excecao)
-                {
-                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
-                }
-            });
+                      Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                  }
+                  catch (Exception excecao)
+                  {
+                      Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                  }
+              });
         }
 
         [TestMethod]
@@ -117,24 +116,24 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var copaMundo = new CopaMundo();
 
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    var campeao = copaMundo.Campeao;
-                }
-                catch (InvalidOperationException excecao)
-                {
-                    if (excecao.Message == $"O campeão somente estará disponível quando a copa do mundo for jogada.")
-                        throw;
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+              {
+                  try
+                  {
+                      var campeao = copaMundo.Campeao;
+                  }
+                  catch (InvalidOperationException excecao)
+                  {
+                      if (excecao.Message == $"Operação inválida. O campeão somente estará disponível quando a copa do mundo for jogada.")
+                          throw;
 
-                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
-                }
-                catch (Exception excecao)
-                {
-                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
-                }
-            });
+                      Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                  }
+                  catch (Exception excecao)
+                  {
+                      Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                  }
+              });
         }
 
         [TestMethod]
@@ -142,24 +141,24 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         {
             var copaMundo = new CopaMundo();
 
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    var campeao = copaMundo.ViceCampeao;
-                }
-                catch (InvalidOperationException excecao)
-                {
-                    if (excecao.Message == $"O vice-campeão somente estará disponível quando a copa do mundo for jogada.")
-                        throw;
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+              {
+                  try
+                  {
+                      var campeao = copaMundo.ViceCampeao;
+                  }
+                  catch (InvalidOperationException excecao)
+                  {
+                      if (excecao.Message == $"Operação inválida. O vice-campeão somente estará disponível quando a copa do mundo for jogada.")
+                          throw;
 
-                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
-                }
-                catch (Exception excecao)
-                {
-                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
-                }
-            });
+                      Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                  }
+                  catch (Exception excecao)
+                  {
+                      Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                  }
+              });
         }
 
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()

@@ -17,7 +17,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             get 
             {
                 if (!_jogou)
-                    throw new InvalidOperationException("O campeão somente estará disponível quando a copa do mundo for jogada.");
+                    throw new InvalidOperationException("Operação inválida. O campeão somente estará disponível quando a copa do mundo for jogada.");
 
                 return _eliminatorias.Campeao; 
             } 
@@ -28,7 +28,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             get 
             {
                 if (!_jogou)
-                    throw new InvalidOperationException("O vice-campeão somente estará disponível quando a copa do mundo for jogada.");
+                    throw new InvalidOperationException("Operação inválida. O vice-campeão somente estará disponível quando a copa do mundo for jogada.");
 
                 return _eliminatorias.ViceCampeao; 
             } 
@@ -41,7 +41,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             _filmes ??= new List<Filme>();
 
             if (_filmes.Count == 8)
-                throw new InvalidOperationException("Não é possível adicionar um novo filme pois a quantidade de filmes selecionados para jogar a copa já foi atingida.");
+                throw new InvalidOperationException("Operação inválida. Somente é possível adicionar até 8 filmes para etapa de seleção da copa do mundo.");
 
             _filmes.Add(filme);
         }
@@ -53,8 +53,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             _jogou = false;
 
             if (_filmes?.Count != 8)
-                throw new InvalidOperationException("É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
-                                                    $"identificados para seleção foi {_filmes?.Count}");
+                throw new InvalidOperationException("Operação inválida. É necessário adicionar 8 filmes para jogar a copa do mundo.");
 
             _eliminatorias = new Eliminatorias(this);
             
