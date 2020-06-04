@@ -6,6 +6,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     public class CopaMundo
     {
+        private const int TOTAL_OBRIGATORIO_FILMES = 8;
+
         private bool _jogou;
         private List<Filme> _filmes;
         private Eliminatorias _eliminatorias;
@@ -40,7 +42,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         {
             _filmes ??= new List<Filme>();
 
-            if (_filmes.Count == 8)
+            if (_filmes.Count == TOTAL_OBRIGATORIO_FILMES)
                 throw new InvalidOperationException("Operação inválida. Somente é possível adicionar até 8 filmes para etapa de seleção da copa do mundo.");
 
             _filmes.Add(filme);
@@ -52,7 +54,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         {
             _jogou = false;
 
-            if (_filmes?.Count != 8)
+            if (_filmes?.Count != TOTAL_OBRIGATORIO_FILMES)
                 throw new InvalidOperationException("Operação inválida. É necessário adicionar 8 filmes para jogar a copa do mundo.");
 
             _eliminatorias = new Eliminatorias(this);
