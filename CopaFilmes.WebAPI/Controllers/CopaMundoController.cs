@@ -27,18 +27,22 @@ namespace CopaFilmes.WebAPI.Controllers
 
         [HttpGet]
         [Route("api/[controller]/jogar/{idsFilmesSelecionados}")]
-        public async Task<ActionResult<CopaMundo>> Get(string idsFilmesSelecionados)
+        public async Task<IActionResult> Get(string idsFilmesSelecionados)
         {
             var copaMundo = new CopaMundo();
-            var ids = idsFilmesSelecionados.Split(',').ToList();
+            var ids = idsFilmesSelecionados?.Split(',')?.ToList();
+
+            if (ids.Count != 8)
+                return BadRequest("Requisição incorreta pois não foi identificado 8 ids de filmes para o torneio.");
+
             var filmes = await _catalogoFilmes.ObterPorIds(ids);
 
             foreach (var filme in filmes)
                 copaMundo.Adicionar(filme);
 
             copaMundo.Jogar();
-            
-            return copaMundo;
+
+            return Ok(copaMundo);
         }
     }
 }

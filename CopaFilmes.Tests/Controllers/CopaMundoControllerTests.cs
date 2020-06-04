@@ -2,6 +2,7 @@
 using CopaFilmes.WebAPI.Controllers;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using CopaFilmes.WebAPI.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Collections.Generic;
@@ -13,21 +14,43 @@ namespace CopaFilmes.Tests.Controllers
     public class CopaMundoControllerTests
     {
         [TestMethod]
-        public async Task CopaMundoControllerTests_Dado_Oito_Ids_De_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Jogar_Retorna_Campeao_E_Vice()
+        public async Task CopaMundoControllerTests_Dado_Request_Oito_Ids_De_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Jogar_Retorna_Campeao_E_Vice()
         {
-            var filmes = ObterFilmesParaCenarioTestes();
+            var oitoFilmes = ObterFilmesParaCenarioTestes();
             var catalogo = Substitute.For<ICatalogoFilmes>();
             var controller = new CopaMundoController(catalogo);
-            
-            catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(filmes);
+            var ids = "tt3606756,tt4881806,tt5164214,tt7784604,tt4154756,tt5463162,tt3778644,tt3501632";
 
-            var resultadoAcao = await controller.Get(string.Empty);
-            var resultadoCopa = resultadoAcao.Value;
+            _ = catalogo.ObterPorIds(Arg.Any<List<string>>()).Returns(oitoFilmes);
+
+            var resultadoAcao = await controller.Get(ids);
+            var resultadoOk = resultadoAcao as OkObjectResult;
+            var resultadoCopa = resultadoOk?.Value as CopaMundo;
 
             _ = catalogo.Received().ObterPorIds(Arg.Any<List<string>>());
 
-            Assert.IsNotNull(resultadoCopa?.Campeao, "existe informação de campeão pois não é nulo.");
-            Assert.IsNotNull(resultadoCopa?.ViceCampeao, "existe informação de vice-campeão pois não é nulo.");
+            Assert.IsNotNull(resultadoOk, "há uma instância da classe OkObjectResult.");
+            Assert.AreEqual(expected: 200, actual: resultadoOk.StatusCode, "o código de status de resposta é 200.");
+            Assert.IsNotNull(resultadoCopa, "há uma instância no corpo da resposta da classe CopaMundo.");
+            Assert.IsNotNull(resultadoCopa.Campeao, "há uma instância da classe Filme como campeão do objeto CopaMundo.");
+            Assert.IsNotNull(resultadoCopa.ViceCampeao, "há uma instância da classe Filme como vice-campeão do objeto CopaMundo.");
+        }
+
+        [TestMethod]
+        public async Task CopaMundoControllerTests_Dado_Request_Nao_Possua_Oito_Ids_de_Filmes_Para_Jogar_A_Copa_Quando_Consumir_Endpoint_Retorna_Bad_Request()
+        {
+            var catalogo = Substitute.For<ICatalogoFilmes>();
+            var controller = new CopaMundoController(catalogo);
+
+            var resultadoAcao = await controller.Get(string.Empty);
+            var resultadoBadRequest = resultadoAcao as BadRequestObjectResult;
+            var resultadoMensagem = resultadoBadRequest?.Value as string;
+
+            _ = catalogo.DidNotReceive().ObterPorIds(Arg.Any<List<string>>());
+
+            Assert.IsNotNull(resultadoBadRequest, "há uma instância da classe BadRequestObjectResult.");
+            Assert.AreEqual(expected: 400, actual: resultadoBadRequest.StatusCode, "o código de status de resposta é 400.");
+            Assert.AreEqual(expected: "Requisição incorreta pois não foi identificado 8 ids de filmes para o torneio.", actual: resultadoMensagem, "a mensagem de resposta do Bad Request está correta.");
         }
 
         [TestMethod]
