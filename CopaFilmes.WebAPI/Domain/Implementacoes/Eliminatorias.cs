@@ -13,7 +13,9 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         private int _totalPartidas;
         private Partida[] _partidas;
+        
         private Filme _campeao;
+        private Filme _viceCampeao;
 
         internal Filme Campeao 
         { 
@@ -26,7 +28,16 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             }
         }
 
-        internal Filme ViceCampeao { get; private set; }
+        internal Filme ViceCampeao 
+        {
+            get
+            {
+                if (!_jogou)
+                    throw new InvalidOperationException("Operação inválida. O vice-campeão somente estará disponível quando as eliminatórias forem jogadas.");
+
+                return _viceCampeao;
+            }
+        }
 
         internal Eliminatorias(CopaMundo copaMundo)
         {
@@ -72,7 +83,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             } while (_partidas.Length >= 1);
 
             _campeao = _partidas[ULTIMA].Vencedor;
-            ViceCampeao = _partidas[ULTIMA].Derrotado;
+            _viceCampeao = _partidas[ULTIMA].Derrotado;
             _jogou = true;
         }
 
