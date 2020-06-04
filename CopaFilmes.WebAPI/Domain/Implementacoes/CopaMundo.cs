@@ -13,24 +13,24 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         internal IReadOnlyCollection<Filme> Filmes => _filmes;
 
         public Filme Campeao 
-        { 
-            get 
+        {
+            get
             {
                 if (!_jogou)
                     throw new InvalidOperationException("Operação inválida. O campeão somente estará disponível quando a copa do mundo for jogada.");
 
-                return _eliminatorias.Campeao; 
+                return _eliminatorias.Campeao;
             } 
         }
 
-        public Filme ViceCampeao 
-        { 
-            get 
+        public Filme ViceCampeao
+        {
+            get
             {
                 if (!_jogou)
                     throw new InvalidOperationException("Operação inválida. O vice-campeão somente estará disponível quando a copa do mundo for jogada.");
 
-                return _eliminatorias.ViceCampeao; 
+                return _eliminatorias.ViceCampeao;
             } 
         }
 
@@ -56,7 +56,6 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
                 throw new InvalidOperationException("Operação inválida. É necessário adicionar 8 filmes para jogar a copa do mundo.");
 
             _eliminatorias = new Eliminatorias(this);
-            
             _eliminatorias.MontarChaveamento();
             _eliminatorias.Jogar();
 
