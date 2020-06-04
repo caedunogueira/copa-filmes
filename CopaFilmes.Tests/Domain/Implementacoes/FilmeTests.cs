@@ -1,5 +1,6 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
@@ -115,6 +116,56 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             var resultado = filmeB.CompareTo(filmeA);
 
             Assert.AreEqual(expected: 1, resultado, $"Filme A com título {tituloFilmeA} sucede Filme B com título {tituloFilmeB} como objeto comparado na ordenação.");
+        }
+
+        [TestMethod]
+        public void FilmeTests_Dado_Nulo_Argumento_Outro_Filme_Quando_Consulta_Se_Possui_Nota_Maior_Lanca_Excecao()
+        {
+            var filme = new FilmeTestBuilder().Build();
+
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = filme.PossuiNotaMaior(null);
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "outroFilme")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void FilmeTests_Dado_Nulo_Argumento_Outro_Filme_Quando_Consulta_Se_Possui_Nota_Igual_Lanca_Excecao()
+        {
+            var filme = new FilmeTestBuilder().Build();
+
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = filme.PossuiNotaIgual(null);
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "outroFilme")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
         }
     }
 }

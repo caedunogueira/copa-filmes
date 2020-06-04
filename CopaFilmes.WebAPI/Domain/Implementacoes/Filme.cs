@@ -24,8 +24,20 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public int CompareTo([AllowNull] Filme other) => Titulo.CompareTo(other.Titulo);
 
-        public bool PossuiNotaMaior(Filme outroFilme) => _nota > outroFilme._nota;
+        public bool PossuiNotaMaior(Filme outroFilme)
+        {
+            if (outroFilme == null)
+                throw new ArgumentNullException(nameof(outroFilme), "Argumento inválido. Deve-se fornecer uma instância da classe Filme.");
 
-        public bool PossuiNotaIgual(Filme outroFilme) => _nota == outroFilme._nota;
+            return _nota > outroFilme._nota;
+        }
+
+        public bool PossuiNotaIgual(Filme outroFilme)
+        {
+            if (outroFilme == null)
+                throw new ArgumentNullException(nameof(outroFilme), "Argumento inválido. Deve-se fornecer uma instância da classe Filme.");
+
+            return _nota == outroFilme._nota;
+        }
     }
 }
