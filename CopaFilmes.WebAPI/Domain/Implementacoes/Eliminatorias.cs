@@ -41,14 +41,9 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal Eliminatorias(CopaMundo copaMundo)
         {
-            if (copaMundo == null)
-                throw new ArgumentNullException(nameof(copaMundo), "Argumento inválido. Deve-se fornecer uma instância da classe CopaMundo.");
-
-            _copaMundo = copaMundo;
+            _copaMundo = copaMundo ?? throw new ArgumentNullException(nameof(copaMundo), "Argumento inválido. Deve-se fornecer uma instância da classe CopaMundo.");
             _montouChaveamento = false;
             _jogou = false;
-
-            
         }
 
         internal void MontarChaveamento()
