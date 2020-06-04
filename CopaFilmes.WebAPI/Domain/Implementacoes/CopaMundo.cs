@@ -6,14 +6,26 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     public class CopaMundo
     {
-        List<Filme> _filmes;
-        Eliminatorias _eliminatorias;
+        private bool _jogou;
+        private List<Filme> _filmes;
+        private Eliminatorias _eliminatorias;
 
         internal IReadOnlyCollection<Filme> Filmes => _filmes;
 
-        public Filme Campeao => _eliminatorias.Campeao;
+        public Filme Campeao 
+        { 
+            get 
+            {
+                if (!_jogou)
+                    throw new InvalidOperationException("O campeão somente estará disponível quando a copa do mundo for jogada.");
+
+                return _eliminatorias.Campeao; 
+            } 
+        }
 
         public Filme ViceCampeao => _eliminatorias.ViceCampeao;
+
+        public CopaMundo() => _jogou = false;
 
         public void Adicionar(Filme filme)
         {
@@ -29,6 +41,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         public void Jogar()
         {
+            _jogou = false;
+
             if (_filmes?.Count != 8)
                 throw new InvalidOperationException("É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
                                                     $"identificados para seleção foi {_filmes?.Count}");
@@ -37,6 +51,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             
             _eliminatorias.MontarChaveamento();
             _eliminatorias.Jogar();
+
+            _jogou = true;
         }
     }
 }
