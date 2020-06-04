@@ -1,6 +1,8 @@
-﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
+﻿using CopaFilmes.Tests.Domain.Fakes;
+using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using CopaFilmes.WebAPI.Domain.Implementacoes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
@@ -18,7 +20,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         public void EliminatoriasTests_Dado_Filmes_Selecionados_Apos_Montar_Chaveamento_Quando_Jogar_As_Eliminatorias_Define_Campeao_E_Vice(int cenario, int posicaoCampeao, int posicaoViceCampeao)
         {
             var copaMundo = new CopaMundo();
-            var eliminatorias = new Eliminatorias(copaMundo);
+            var eliminatorias = new EliminatoriasFake(copaMundo);
             var filmes = cenario switch
             {
                 1 => ObterFilmesParaPrimeiroCenarioTestes(),
@@ -40,6 +42,32 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
 
             Assert.AreEqual(expected: filmes[posicaoViceCampeao], actual: eliminatorias.ViceCampeao,
                 $"Para cenário de teste {cenario} o vice-campeão esperado é {filmes[posicaoViceCampeao].Titulo} e o vice-campeão das eliminatórias foi {eliminatorias.ViceCampeao.Titulo}.");
+        }
+
+        [TestMethod]
+        public void EliminatoriasTests_Dado_Filmes_Selecionados_Sem_Montar_Chaveamento_Quando_Jogar_As_Eliminatorias_Lanca_Excecao()
+        {
+            var copaMundo = new CopaMundo();
+            var eliminatorias = new Eliminatorias(copaMundo);
+
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    eliminatorias.Jogar();
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == "Operação inválida. É necessário primeiro montar o chaveamento para, somente então, realizar as partidas das eliminatórias.")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
         }
 
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()

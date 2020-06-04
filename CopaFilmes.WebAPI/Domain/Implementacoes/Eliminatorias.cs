@@ -8,6 +8,8 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
     {
         private readonly CopaMundo _copaMundo;
 
+        protected bool _montouChaveamento;
+
         private int _totalPartidas;
         private Partida[] _partidas;
 
@@ -15,15 +17,27 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
         internal Filme ViceCampeao { get; private set; }
 
-        internal Eliminatorias(CopaMundo copaMundo) => _copaMundo = copaMundo;
+        internal Eliminatorias(CopaMundo copaMundo)
+        {
+            _copaMundo = copaMundo;
+            _montouChaveamento = false;
+        }
 
-        internal void MontarChaveamento() => _copaMundo.OrdenarFilmes();
+        internal void MontarChaveamento()
+        {
+            _montouChaveamento = false;
+            _copaMundo.OrdenarFilmes();
+            _montouChaveamento = true;
+        }
 
         internal void Jogar()
         {
             const int ULTIMA = 0;
 
             var vencedores = new List<Filme>();
+
+            if (!_montouChaveamento)
+                throw new InvalidOperationException("Operação inválida. É necessário primeiro montar o chaveamento para, somente então, realizar as partidas das eliminatórias.");
 
             DefinirPartidas(_copaMundo.Filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
 
