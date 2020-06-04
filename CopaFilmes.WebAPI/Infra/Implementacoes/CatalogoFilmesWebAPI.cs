@@ -2,7 +2,6 @@
 using CopaFilmes.WebAPI.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -39,7 +38,7 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
                     filmes.Add(CriarFilme(elemento));
             }
 
-            return filmes.AsReadOnly();
+            return filmes;
         }
 
         public async Task<IReadOnlyCollection<Filme>> ObterPorIds(List<string> ids)
@@ -57,12 +56,13 @@ namespace CopaFilmes.WebAPI.Infra.Implementacoes
                 var elementos = await JsonSerializer.DeserializeAsync<IEnumerable<JsonElement>>(stream);
 
                 foreach (var elemento in elementos)
-                    filmes.Add(CriarFilme(elemento));
-
-                filmes = filmes.Where(f => ids.Contains(f.Id)).ToList();
+                {
+                    if (ids.Contains(elemento.GetProperty("id").GetString()))
+                        filmes.Add(CriarFilme(elemento));
+                }
             }
 
-            return filmes.AsReadOnly();
+            return filmes;
         }
 
         private Filme CriarFilme(JsonElement elemento)
