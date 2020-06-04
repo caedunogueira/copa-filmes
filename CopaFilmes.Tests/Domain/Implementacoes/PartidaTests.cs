@@ -1,6 +1,8 @@
 ﻿using CopaFilmes.Tests.Domain.Implementacoes.TestBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CopaFilmes.Tests.Domain.Implementacoes
 {
@@ -81,6 +83,139 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                 yield return new object[] { "Os Incríveis 2", 8.5m, "Hereditário", 8.5m, 2, 1 };
                 yield return new object[] { "Jurassic World: Reino Ameaçado", 8.5m, "Oito Mulheres e um Segredo", 8.5m, 1, 2 };
             }
+        }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Partida_Sem_Disputa_Quando_Consultar_Pelo_Vencedor_Lanca_Excecao()
+        {
+            var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").ComNota(8.5m).Build();
+            var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partida = new PartidaTestBuilder().ComFilme(filmeA).ComFilme(filmeB).Build();
+
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    _ = partida.Vencedor;
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == "Operação inválida. O vencedor somente estará disponível quando a partida for jogada.")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Partida_Sem_Disputa_Quando_Consultar_Pelo_Derrotado_Lanca_Excecao()
+        {
+            var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").ComNota(8.5m).Build();
+            var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partida = new PartidaTestBuilder().ComFilme(filmeA).ComFilme(filmeB).Build();
+
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    _ = partida.Derrotado;
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == "Operação inválida. O derrotado somente estará disponível quando a partida for jogada.")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Nulo_Argumento_Eliminatorias_Quando_Instanciar_Lanca_Excecao()
+        {
+            var filmeA = new FilmeTestBuilder().ComTitulo("Filme A").ComNota(8.5m).Build();
+            var filmeB = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partidaBuilder = new PartidaTestBuilder().ComEliminatorias(null).ComFilme(filmeA).ComFilme(filmeB);
+
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = partidaBuilder.Build();
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "eliminatorias")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Nulo_Argumento_Primeiro_Participante_Quando_Instanciar_Lanca_Excecao()
+        {
+            var filme = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partidaBuilder = new PartidaTestBuilder().ComFilme(null).ComFilme(filme);
+
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = partidaBuilder.Build();
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "primeiroFilme")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void PartidaTests_Dado_Nulo_Argumento_Segundo_Participante_Quando_Instanciar_Lanca_Excecao()
+        {
+            var filme = new FilmeTestBuilder().ComTitulo("Filme B").ComNota(8.5m).Build();
+            var partidaBuilder = new PartidaTestBuilder().ComFilme(filme).ComFilme(null);
+
+            _ = Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                try
+                {
+                    _ = partidaBuilder.Build();
+                }
+                catch (ArgumentNullException excecao)
+                {
+                    if (excecao.ParamName == "segundoFilme")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(ArgumentNullException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(ArgumentNullException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
         }
     }
 }

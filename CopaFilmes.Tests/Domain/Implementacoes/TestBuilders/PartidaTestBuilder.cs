@@ -6,7 +6,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
     internal class PartidaTestBuilder
     {
         private readonly CopaMundo _copaMundo;
-        private readonly Eliminatorias _eliminatorias;
+        private Eliminatorias _eliminatorias;
 
         private List<Filme> _filmes;
 
@@ -30,6 +30,13 @@ namespace CopaFilmes.Tests.Domain.Implementacoes.TestBuilders
             _filmes ??= new List<Filme>();
 
             _filmes.Add(filme);
+
+            return this;
+        }
+
+        internal PartidaTestBuilder ComEliminatorias(Eliminatorias eliminatorias)
+        {
+            _eliminatorias = eliminatorias;
 
             return this;
         }
