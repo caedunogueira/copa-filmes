@@ -130,6 +130,31 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             });
         }
 
+        [TestMethod]
+        public void CopaMundoTests_Dado_Que_Nao_Foi_Jogada_A_Copa_Quando_Consultar_Pelo_Vice_Campeao_Lanca_Excecao()
+        {
+            var copaMundo = new CopaMundo();
+
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    var campeao = copaMundo.ViceCampeao;
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == $"O vice-campeão somente estará disponível quando a copa do mundo for jogada.")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()
         {
             return new List<Filme>

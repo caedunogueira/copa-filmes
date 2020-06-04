@@ -23,7 +23,16 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             } 
         }
 
-        public Filme ViceCampeao => _eliminatorias.ViceCampeao;
+        public Filme ViceCampeao 
+        { 
+            get 
+            {
+                if (!_jogou)
+                    throw new InvalidOperationException("O vice-campeão somente estará disponível quando a copa do mundo for jogada.");
+
+                return _eliminatorias.ViceCampeao; 
+            } 
+        }
 
         public CopaMundo() => _jogou = false;
 
