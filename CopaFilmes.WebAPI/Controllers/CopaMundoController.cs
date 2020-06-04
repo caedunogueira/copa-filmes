@@ -32,12 +32,12 @@ namespace CopaFilmes.WebAPI.Controllers
             var copaMundo = new CopaMundo();
             var ids = idsFilmesSelecionados?.Split(',')?.ToList();
 
-            if (ids.Count != 8)
+            if (ids.Count != CopaMundo.TOTAL_OBRIGATORIO_FILMES)
                 return BadRequest("Requisição incorreta pois não foi identificado 8 ids de filmes para o torneio.");
 
             var filmes = await _catalogoFilmes.ObterPorIds(ids);
 
-            if (filmes.Count != 8)
+            if (filmes.Count != CopaMundo.TOTAL_OBRIGATORIO_FILMES)
                 return NotFound("Requisição inválida pois um ou mais filmes dentre os Ids informados não consta(m) no catálogo de filmes.");
 
             foreach (var filme in filmes)

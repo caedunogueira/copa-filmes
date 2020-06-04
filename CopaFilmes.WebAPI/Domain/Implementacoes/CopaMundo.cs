@@ -6,7 +6,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 {
     public class CopaMundo
     {
-        private const int TOTAL_OBRIGATORIO_FILMES = 8;
+        public const int TOTAL_OBRIGATORIO_FILMES = 8;
 
         private bool _jogou;
         private List<Filme> _filmes;
