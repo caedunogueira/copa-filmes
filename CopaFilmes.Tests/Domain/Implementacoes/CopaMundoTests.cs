@@ -43,9 +43,22 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void CopaMundoTests_Dado_Que_A_Quantidade_De_Filmes_Selecionados_Difere_De_Oito_Quando_Jogar_Lanca_Excecao()
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        [DataRow(5)]
+        [DataRow(6)]
+        [DataRow(7)]
+        [DataRow(9)]
+        [DataRow(10)]
+        public void CopaMundoTests_Dado_Que_A_Quantidade_De_Filmes_Selecionados_Difere_De_Oito_Quando_Jogar_Lanca_Excecao(int quantidadeFilmes)
         {
             var copaMundo = new CopaMundo();
+
+            for (var i = 1; i <= quantidadeFilmes; i++)
+                copaMundo.Adicionar(new FilmeTestBuilder().Build());
 
             Assert.ThrowsException<InvalidOperationException>(() =>
             {
