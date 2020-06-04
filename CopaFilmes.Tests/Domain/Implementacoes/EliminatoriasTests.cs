@@ -70,6 +70,32 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             });
         }
 
+        [TestMethod]
+        public void EliminatoriasTests_Dado_Eliminatorias_Sem_Jogar_Quando_Consultar_Pelo_Campeao_Lanca_Excecao()
+        {
+            var copaMundo = new CopaMundo();
+            var eliminatorias = new Eliminatorias(copaMundo);
+
+            _ = Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    _ = eliminatorias.Campeao;
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == "Operação inválida. O campeão somente estará disponível quando as eliminatórias forem jogadas.")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
         private List<Filme> ObterFilmesParaPrimeiroCenarioTestes()
         {
             return new List<Filme>

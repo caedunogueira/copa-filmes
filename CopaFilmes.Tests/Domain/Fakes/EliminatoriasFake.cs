@@ -8,6 +8,7 @@ namespace CopaFilmes.Tests.Domain.Fakes
         internal EliminatoriasFake(CopaMundo copaMundo) : base(copaMundo)
         {
             _montouChaveamento = true;
+            
         }
     }
 }

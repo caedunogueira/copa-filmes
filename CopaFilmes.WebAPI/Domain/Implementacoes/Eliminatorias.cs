@@ -9,18 +9,31 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         private readonly CopaMundo _copaMundo;
 
         protected bool _montouChaveamento;
+        private bool _jogou;
 
         private int _totalPartidas;
         private Partida[] _partidas;
+        private Filme _campeao;
 
-        internal Filme Campeao { get; private set; }
+        internal Filme Campeao 
+        { 
+            get 
+            {
+                if (!_jogou)
+                    throw new InvalidOperationException("Operação inválida. O campeão somente estará disponível quando as eliminatórias forem jogadas.");
+
+                return _campeao;
+            }
+        }
 
         internal Filme ViceCampeao { get; private set; }
 
         internal Eliminatorias(CopaMundo copaMundo)
         {
-            _copaMundo = copaMundo;
             _montouChaveamento = false;
+            _jogou = false;
+
+            _copaMundo = copaMundo;
         }
 
         internal void MontarChaveamento()
@@ -39,6 +52,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             if (!_montouChaveamento)
                 throw new InvalidOperationException("Operação inválida. É necessário primeiro montar o chaveamento para, somente então, realizar as partidas das eliminatórias.");
 
+            _jogou = false;
             DefinirPartidas(_copaMundo.Filmes, ObterPosicaoPrimeiroParticipantePartidaPrimeiraFase, ObterPosicaoSegundoParticipantePartidaPrimeiraFase);
 
             do
@@ -57,8 +71,9 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
 
             } while (_partidas.Length >= 1);
 
-            Campeao = _partidas[ULTIMA].Vencedor;
+            _campeao = _partidas[ULTIMA].Vencedor;
             ViceCampeao = _partidas[ULTIMA].Derrotado;
+            _jogou = true;
         }
 
         private void DefinirPartidas(IReadOnlyCollection<Filme> participantes, Func<int, int> posicaoPrimeiroParticipantePartida, Func<int, IReadOnlyCollection<Filme>, int> posicaoSegundoParticipantePartida)
