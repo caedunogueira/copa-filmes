@@ -51,8 +51,6 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         [DataRow(5)]
         [DataRow(6)]
         [DataRow(7)]
-        [DataRow(9)]
-        [DataRow(10)]
         public void CopaMundoTests_Dado_Que_A_Quantidade_De_Filmes_Selecionados_Difere_De_Oito_Quando_Jogar_Lanca_Excecao(int quantidadeFilmes)
         {
             var copaMundo = new CopaMundo();
@@ -70,6 +68,32 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
                 {
                     if (excecao.Message == "É necessário conter 8 filmes selecionados para disputar a Copa do Mundo porém a quantidade de filmes " +
                                            $"identificados para seleção foi {copaMundo.Filmes?.Count}")
+                        throw;
+
+                    Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");
+                }
+                catch (Exception excecao)
+                {
+                    Assert.Fail($"A exceção esperada não foi lançada. O tipo da exceção esperada é {nameof(InvalidOperationException)} mas foi {excecao.GetType().FullName}.");
+                }
+            });
+        }
+
+        [TestMethod]
+        public void CopaMundoTests_Dado_Quantidade_Maxima_De_Filmes_Atingida_Quando_Adicionar_Proximo_Filme_Lanca_Excecao()
+        {
+            var copaMundo = new CopaMundo();
+
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                try
+                {
+                    for (var i = 1; i <= 9; i++)
+                        copaMundo.Adicionar(new FilmeTestBuilder().Build());
+                }
+                catch (InvalidOperationException excecao)
+                {
+                    if (excecao.Message == $"Não é possível adicionar um novo filme pois a quantidade de filmes selecionados para jogar a copa já foi atingida.")
                         throw;
 
                     Assert.Fail($"A exceção esperada {nameof(InvalidOperationException)} foi lançada mas com uma mensagem inesperada. A mensagem da exceção foi {excecao.Message}");

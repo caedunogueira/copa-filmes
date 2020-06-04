@@ -19,6 +19,9 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
         {
             _filmes ??= new List<Filme>();
 
+            if (_filmes.Count == 8)
+                throw new InvalidOperationException("Não é possível adicionar um novo filme pois a quantidade de filmes selecionados para jogar a copa já foi atingida.");
+
             _filmes.Add(filme);
         }
 
