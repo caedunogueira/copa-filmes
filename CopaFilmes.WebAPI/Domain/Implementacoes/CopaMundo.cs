@@ -48,7 +48,7 @@ namespace CopaFilmes.WebAPI.Domain.Implementacoes
             _filmes.Add(filme);
         }
 
-        public void OrdenarFilmes() => _filmes = _filmes.OrderBy(f => f).ToList();
+        internal void OrdenarFilmes() => _filmes = _filmes.OrderBy(f => f).ToList();
 
         public void Jogar()
         {
