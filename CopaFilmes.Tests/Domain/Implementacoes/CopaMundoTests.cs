@@ -112,7 +112,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void CopaMundoTests_Dado_Que_Nao_Foi_Jogada_A_Copa_Quando_Obter_Campeao_Lanca_Excecao()
+        public void CopaMundoTests_Dado_Que_Nao_Foi_Jogada_A_Copa_Quando_Consultar_Pelo_Campeao_Lanca_Excecao()
         {
             var copaMundo = new CopaMundo();
 
@@ -120,7 +120,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
               {
                   try
                   {
-                      var campeao = copaMundo.Campeao;
+                      _ = copaMundo.Campeao;
                   }
                   catch (InvalidOperationException excecao)
                   {
@@ -145,7 +145,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
               {
                   try
                   {
-                      var campeao = copaMundo.ViceCampeao;
+                      _ = copaMundo.ViceCampeao;
                   }
                   catch (InvalidOperationException excecao)
                   {
