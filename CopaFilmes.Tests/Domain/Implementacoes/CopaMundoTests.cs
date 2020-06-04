@@ -80,7 +80,14 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
         }
 
         [TestMethod]
-        public void CopaMundoTests_Dado_Quantidade_Maxima_De_Filmes_Atingida_Quando_Adicionar_Proximo_Filme_Lanca_Excecao()
+        [DataRow(9)]
+        [DataRow(10)]
+        [DataRow(11)]
+        [DataRow(12)]
+        [DataRow(13)]
+        [DataRow(14)]
+        [DataRow(15)]
+        public void CopaMundoTests_Dado_Quantidade_Maxima_De_Filmes_Atingida_Quando_Adicionar_Proximo_Filme_Lanca_Excecao(int quantidadeFilmes)
         {
             var copaMundo = new CopaMundo();
 
@@ -88,7 +95,7 @@ namespace CopaFilmes.Tests.Domain.Implementacoes
             {
                 try
                 {
-                    for (var i = 1; i <= 9; i++)
+                    for (var i = 1; i <= quantidadeFilmes; i++)
                         copaMundo.Adicionar(new FilmeTestBuilder().Build());
                 }
                 catch (InvalidOperationException excecao)
