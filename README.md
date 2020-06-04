@@ -88,3 +88,9 @@ Caso deseja visualizar a lista de testes , execute o comando:
 ```
 dotnet vstest CopaFilmes.Tests\bin\Debug\netcoreapp3.1\CopaFilmes.Tests.dll --ListTests
 ```
+
+Para aqueles que possuem o Developer Command Prompt (instalado com o Visual Studio), após o comando do build, uma alternativa de exibição da suite de testes pode ser realizada com o comando abaixo:
+
+```
+vstest.console CopaFilmes.Tests\bin\Debug\netcoreapp3.1\CopaFilmes.Tests.dll
+```
