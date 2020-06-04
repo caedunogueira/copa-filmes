@@ -18,11 +18,11 @@ namespace CopaFilmes.WebAPI.Controllers
 
         [HttpGet]
         [Route("api/[controller]/filmes-disponiveis")]
-        public async Task<IReadOnlyCollection<Filme>> Get()
+        public async Task<IActionResult> Get()
         {
             var filmes = await _catalogoFilmes.ObterTodos();
 
-            return filmes;
+            return Ok(filmes);
         }
 
         [HttpGet]

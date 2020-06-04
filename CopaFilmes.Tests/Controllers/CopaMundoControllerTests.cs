@@ -87,11 +87,15 @@ namespace CopaFilmes.Tests.Controllers
 
             catalogo.ObterTodos().Returns(new List<Filme>());
 
-            var resultado = await controller.Get();
+            var resultadoAcao = await controller.Get();
+            var resultadoOk = resultadoAcao as OkObjectResult;
+            var filmes = resultadoOk?.Value as IReadOnlyCollection<Filme>;
 
             _ = catalogo.Received().ObterTodos();
 
-            Assert.IsInstanceOfType(value: resultado, expectedType: typeof(IReadOnlyCollection<Filme>));
+            Assert.IsNotNull(resultadoOk, "há uma instância da classe OkObjectResult.");
+            Assert.AreEqual(expected: 200, actual: resultadoOk.StatusCode, "o código de status de resposta é 200.");
+            Assert.IsNotNull(filmes, "há uma instância no corpo da resposta da classe CopaMundo.");
         }
 
         private List<Filme> ObterFilmesParaCenarioTestes()
